@@ -1,1 +1,2 @@
-web java -jar targetdependencywebapp-runner.jar --port $PORT target.war
+# Procfile
+web: java -jar target/Redbear-0.0.1-SNAPSHOT.jar
