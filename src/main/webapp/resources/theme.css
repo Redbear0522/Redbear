@@ -1,0 +1,319 @@
+/* 폼 스타일 */
+form {
+  background: #e9f8ef;
+  border: 1px solid #a3d9a5;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 100, 0, 0.1);
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+form label {
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="submit"],
+form input[type="button"],
+form textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #b2dfdb;
+  background-color: #ffffff;
+  transition: border-color 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form input[type="email"]:focus,
+form input[type="tel"]:focus,
+form textarea:focus {
+  border-color: #66bb6a;
+  outline: none;
+}
+
+form input[type="submit"],
+form input[type="button"] {
+  background-color: #66bb6a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover,
+form input[type="button"]:hover {
+  background-color: #4caf50;
+}
+
+.hero-section {
+  background-color: #d4edda !important;  /* 연녹색 */
+  color: #155724 !important;             /* 진한 초록 텍스트 */
+  padding: 60px 0;
+  text-align: center;}
+  
+
+  
+  
+  
+ /* 녹색 계열 어두운 배경 색상 적용 */
+.custom-green {
+  background-color: #1d4023 !important; /* 진한 녹색 */
+}
+
+.custom-green .navbar-brand,
+.custom-green .nav-link {
+  color: #dfffd9 !important; /* 연한 초록빛 글씨 */
+}
+
+.custom-green .nav-link:hover {
+  color: #a3e6a1 !important; /* 마우스 오버 시 연한 라임 */
+}
+.bg-light-green {
+  background-color: #d6f5d6 !important; /* 연한 연두색 */
+}
+
+.bg-light-green p {
+  color: #225522 !important; /* 어두운 녹색 계열 텍스트 */
+}
+
+
+ .hero-section11 {
+  background-color: #d6f5d6 !important;  
+  color: #1d4023 !important;             /* 진한 초록 텍스트 */
+  padding: 60px 0;
+  text-align: center;} 
+  
+  
+  /* 전체 입력박스 공통 스타일 */
+input, select {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 넓은 input */
+.wide-input {
+  width: 100%;
+}
+
+/* 전화번호 라인 정렬 */
+.phone-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* 통신사 select */
+.carrier-select {
+  flex: 1;
+}
+
+/* 전화번호 input */
+.phone-input {
+  flex: 3;
+}
+/* 반응형 테이블 래퍼 */
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* 테이블 자체는 그대로 유지 */
+table-generic {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 1rem;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    min-width: 600px; /* 모바일에서도 열이 너무 좁아지지 않도록 */
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+tr:hover {
+    background-color: #f1f9ff;
+    transition: background-color 0.2s ease;
+}
+
+/* 게시판 테이블 기본 스타일 */
+table-board {
+  width: 80%;
+  margin: 40px auto;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 테이블 헤더 */
+th {
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  padding: 15px 20px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* 테이블 셀 */
+td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e1e1e1;
+  text-align: center;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* 제목 셀은 왼쪽 정렬, 약간 들여쓰기 */
+td.title {
+  text-align: left;
+  padding-left: 25px;
+  font-weight: 500;
+  color: #0056b3;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* 제목 링크 스타일 */
+td.title a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+}
+
+/* 제목 링크 hover 효과 */
+td.title a:hover {
+  color: #003d80;
+  text-decoration: underline;
+}
+
+/* 답글 들여쓰기용 span (기존 &nbsp; 대신) */
+.reply-indent {
+  display: inline-block;
+  width: 20px;
+}
+
+/* 등록된 글이 없을 때 */
+td[colspan="5"] {
+  padding: 40px 0;
+  font-size: 1.1rem;
+  color: #777;
+  font-style: italic;
+}
+
+/* 상단 글쓰기 버튼 컨테이너 */
+.write-btn {
+  width: 80%;
+  margin: 0 auto 20px auto;
+  text-align: right;
+}
+
+/* 글쓰기 버튼 스타일 */
+.write-btn button {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 22px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+/* 글쓰기 버튼 hover 효과 */
+.write-btn button:hover {
+  background-color: #0056b3;
+}
+
+/* 페이징 영역 */
+.pagination {
+  width: 80%;
+  margin: 30px auto;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.pagination a {
+  margin: 0 10px;
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.pagination a:hover {
+  color: #0056b3;
+}
+
+.pagination span {
+  margin: 0 10px;
+  color: #555;
+}
+
+/* 반응형: 화면이 좁아질 때 */
+@media (max-width: 768px) {
+  table {
+    width: 95%;
+  }
+  .write-btn {
+    width: 95%;
+  }
+  td, th {
+    padding: 12px 10px;
+    font-size: 0.85rem;
+  }
+  .write-btn button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.title .reply-marker {
+    color: #666;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+ 
+  
