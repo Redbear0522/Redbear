@@ -1,40 +1,72 @@
-# =================================================================
-# 1단계: 빌드용 환경 (Builder)
-# =================================================================
-# ⬇️⬇️⬇️ 자바 버전을 17에서 21로 수정했습니다. ⬇️⬇️⬇️
-FROM maven:3.9.6-eclipse-temurin-21 AS builder
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-# 작업 폴더를 /app으로 지정
-WORKDIR /app
+    <groupId>com.example</groupId>
+    <artifactId>m4-news</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-# Maven Wrapper 파일들을 먼저 복사
-COPY .mvn/ .mvn
-COPY mvnw .
-COPY mvnw.cmd .
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-# pom.xml 파일과 소스코드 전체를 복사
-COPY pom.xml .
-COPY src ./src
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version>
+            <scope>provided</scope>
+        </dependency>
 
-# Maven Wrapper에 실행 권한을 부여하고, 테스트는 건너뛰고 빠르게 빌드
-RUN chmod +x ./mvnw && ./mvnw package -DskipTests
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>11.0.15</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>11.0.15</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.servlets</groupId>
+            <artifactId>cos</artifactId>
+            <version>05Nov2002</version>
+        </dependency>
+    </dependencies>
 
-# =================================================================
-# 2단계: 최종 실행용 환경 (Runner)
-# =================================================================
-# ⬇️⬇️⬇️ 자바 버전을 17에서 21로 수정했습니다. ⬇️⬇️⬇️
-FROM eclipse-temurin:21-jre-jammy
-
-# 작업 폴더를 /app으로 지정
-WORKDIR /app
-
-# 1단계(builder)에서 빌드된 .jar 파일을 지금 환경으로 복사해옵니다.
-# 'm4-news-1.0-SNAPSHOT.jar' 부분을 실제 파일 이름으로 바꿔주세요!
-COPY --from=builder /app/target/m4-news-1.0-SNAPSHOT.jar app.jar
-
-# Render에게 8080 포트를 사용한다고 알림
-EXPOSE 8080
-
-# 최종적으로 실행할 명령어
-CMD ["java", "-jar", "app.jar"]
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.example.myrenderapp.Main</mainClass> </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
