@@ -1,15 +1,41 @@
-# 1. 베이스 이미지 선택 (자바 17 실행 환경이 설치된 미니 컴퓨터)
-FROM eclipse-temurin:21-jdk-jammy
+# =================================================================
+# 1단계: 빌드용 환경 (Builder)
+# Maven과 JDK가 설치된 환경에서 우리 프로젝트를 빌드합니다.
+# =================================================================
+FROM eclipse-temurin:17-jdk-jammy AS builder
 
-# 2. 작업 디렉토리 설정
+# 작업 폴더를 /app으로 지정
 WORKDIR /app
 
-# 3. 빌드된 .jar 파일을 미니 컴퓨터 안으로 복사
-#    'm4-news-1.0-SNAPSHOT.jar' 부분을 실제 파일 이름으로 바꿔주세요!
-COPY target/m4-news-1.0-SNAPSHOT.jar app.jar
+# Maven Wrapper 파일들을 먼저 복사
+COPY .mvn/ .mvn
+COPY mvnw .
+COPY mvnw.cmd .
 
-# 4. Render가 사용할 포트 번호를 외부에 알림
+# pom.xml 파일과 소스코드 전체를 복사
+COPY pom.xml .
+COPY src ./src
+
+# Maven Wrapper에 실행 권한을 부여하고, 테스트는 건너뛰고 빠르게 빌드
+RUN chmod +x ./mvnw && ./mvnw package -DskipTests
+
+
+# =================================================================
+# 2단계: 최종 실행용 환경 (Runner)
+# 딱 필요한 자바 실행 환경(JRE)만 있는 가벼운 환경입니다.
+# =================================================================
+FROM eclipse-temurin:17-jre-jammy
+
+# 작업 폴더를 /app으로 지정
+WORKDIR /app
+
+# --- 가장 중요한 부분 ---
+# 1단계(builder)에서 빌드된 .jar 파일을 지금 환경으로 복사해옵니다.
+# 'm4-news-1.0-SNAPSHOT.jar' 부분을 실제 파일 이름으로 바꿔주세요!
+COPY --from=builder /app/target/m4-news-1.0-SNAPSHOT.jar app.jar
+
+# Render에게 8080 포트를 사용한다고 알림
 EXPOSE 8080
 
-# 5. 이 미니 컴퓨터가 시작될 때 실행할 명령어
+# 최종적으로 실행할 명령어
 CMD ["java", "-jar", "app.jar"]
