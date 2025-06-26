@@ -8,22 +8,15 @@ COPY mvnw .
 COPY mvnw.cmd .
 COPY pom.xml .
 COPY src ./src
-# 'package'를 실행하면 .war 파일 생성과 webapp-runner.jar 다운로드가 모두 실행됨
-RUN ./mvnw package
+RUN chmod +x ./mvnw && ./mvnw package -DskipTests
 
 # =================================================================
 # STAGE 2: Run the application
 # =================================================================
-FROM eclipse-temurin:21-jre
-WORKDIR /app
+FROM tomcat:9.0-jdk21-temurin
 
-# 1단계에서 빌드된 target 폴더 전체를 복사
-COPY --from=builder /app/target /app/target
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Render가 제공하는 포트를 사용하도록 설정
+COPY --from=builder /app/target/m4-news-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+
 EXPOSE 8080
-ENV PORT 8080
-
-# webapp-runner.jar를 사용해 .war 파일을 실행
-# java -jar [러너 경로] [실행할 war 파일 경로]
-CMD ["java", "-jar", "target/dependency/webapp-runner.jar", "target/m4-news-1.0-SNAPSHOT.war"]
