@@ -16,7 +16,7 @@ public class GalleryDAO {
 
 	private GalleryDAO() {}
 	
-    private Connection connect() {
+    /*private Connection connect() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			//String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
@@ -28,7 +28,20 @@ public class GalleryDAO {
 			e.printStackTrace();
 		}
 		return conn;
-	}
+	}*/
+	private Connection connect() throws Exception {
+    String dbUrl = System.getenv("JDBC_DATABASE_URL"); // Heroku 환경변수
+
+    if (dbUrl != null && !dbUrl.isEmpty()) {
+        // Heroku 환경일 때 (PostgreSQL)
+        Class.forName("org.postgresql.Driver");
+        return DriverManager.getConnection(dbUrl);
+    } else {
+        // 내 PC(로컬) 환경일 때 (Oracle)
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        return DriverManager.getConnection("jdbc:oracle:thin:@192.168.219.198:1521:orcl", "team01", "1234");
+    }
+}
 
     private void disconnect() {
         try {
