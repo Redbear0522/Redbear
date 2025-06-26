@@ -1,33 +1,29 @@
 # =================================================================
-# STAGE 1: Build the application using the image's built-in Maven
+# STAGE 1: Build the .war file and download webapp-runner
 # =================================================================
 FROM maven:3-eclipse-temurin-21 AS builder
-
-# Set the working directory
 WORKDIR /app
-
-# Copy only the essential files: pom.xml and the src folder
+COPY .mvn/ .mvn
+COPY mvnw .
+COPY mvnw.cmd .
 COPY pom.xml .
 COPY src ./src
-
-# Run the build directly with the 'mvn' command. No more mvnw!
-# This is cleaner and more reliable inside Docker.
-RUN mvn package -DskipTests
+# 'package'를 실행하면 .war 파일 생성과 webapp-runner.jar 다운로드가 모두 실행됨
+RUN ./mvnw package
 
 # =================================================================
-# STAGE 2: Create the final, lightweight runtime image
+# STAGE 2: Run the application
 # =================================================================
 FROM eclipse-temurin:21-jre
-
-# Set the working directory
 WORKDIR /app
 
-# Copy the built JAR from the builder stage
-# IMPORTANT: Replace 'm4-news-1.0-SNAPSHOT.jar' with your actual JAR file name
-COPY --from=builder /app/target/m4-news-1.0-SNAPSHOT.jar app.jar
+# 1단계에서 빌드된 target 폴더 전체를 복사
+COPY --from=builder /app/target /app/target
 
-# Expose the port the application will run on
+# Render가 제공하는 포트를 사용하도록 설정
 EXPOSE 8080
+ENV PORT 8080
 
-# Command to run the application
-CMD ["java", "-jar", "app.jar"]
+# webapp-runner.jar를 사용해 .war 파일을 실행
+# java -jar [러너 경로] [실행할 war 파일 경로]
+CMD ["java", "-jar", "target/dependency/webapp-runner.jar", "target/m4-news-1.0-SNAPSHOT.war"]
