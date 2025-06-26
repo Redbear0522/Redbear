@@ -1,24 +1,37 @@
-# ===== 빌드 스테이지 =====
-FROM maven:3.8.7-jdk-21 AS builder
+# =================================================================
+# STAGE 1: Build a project with a verified Java 21 + Maven image
+# =================================================================
+FROM maven:3-eclipse-temurin-21 AS builder
+
+# Set the working directory
 WORKDIR /app
 
-# 의존성만 먼저 내려받아 캐시 활용
+# Copy Maven Wrapper files
+COPY .mvn/ .mvn
+COPY mvnw .
+COPY mvnw.cmd .
+
+# Copy the project's pom.xml and source code
 COPY pom.xml .
-RUN mvn dependency:go-offline -B
-
-# 소스코드 복사 및 패키징
 COPY src ./src
-RUN mvn package -DskipTests -B
 
-# ===== 실행 스테이지 =====
-FROM tomcat:9.0-jdk17-openjdk-slim
-WORKDIR /usr/local/tomcat/webapps
+# Grant execute permissions and build the project, skipping tests
+RUN chmod +x ./mvnw && ./mvnw package -DskipTests
 
-# 빌드된 WAR를 ROOT.war로 복사
-COPY --from=builder /app/target/app.war ROOT.war
+# =================================================================
+# STAGE 2: Create the final, lightweight runtime image
+# =================================================================
+FROM eclipse-temurin:21-jre
 
-# Render가 매핑하는 포트
+# Set the working directory
+WORKDIR /app
+
+# Copy the built JAR from the builder stage
+# IMPORTANT: Replace 'm4-news-1.0-SNAPSHOT.jar' with your actual JAR file name
+COPY --from=builder /app/target/m4-news-1.0-SNAPSHOT.jar app.jar
+
+# Expose the port the application will run on
 EXPOSE 8080
 
-# Tomcat 기동
-CMD ["catalina.sh", "run"]
+# Command to run the application
+CMD ["java", "-jar", "app.jar"]
