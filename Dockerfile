@@ -1,5 +1,5 @@
 # ===== 빌드 스테이지 =====
-FROM maven:3.8.7-eclipse-temurin-17-jammy AS builder
++ FROM maven:3.8.7-jdk-21 AS builder
 WORKDIR /app
 
 # 의존성만 먼저 내려받아 캐시 활용
