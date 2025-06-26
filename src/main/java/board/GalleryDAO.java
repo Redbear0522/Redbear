@@ -20,6 +20,9 @@ public class GalleryDAO {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
+			String url = "jdbc:oracle:thin:@58.73.200.225:1521:orcl";
+			
+
 			conn = DriverManager.getConnection(url, "java03", "1234");
 		} catch (Exception e) {
 			e.printStackTrace();
