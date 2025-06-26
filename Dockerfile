@@ -1,22 +1,18 @@
 # =================================================================
-# STAGE 1: Build a project with a verified Java 21 + Maven image
+# STAGE 1: Build the application using the image's built-in Maven
 # =================================================================
 FROM maven:3-eclipse-temurin-21 AS builder
 
 # Set the working directory
 WORKDIR /app
 
-# Copy Maven Wrapper files
-COPY .mvn/ .mvn
-COPY mvnw .
-COPY mvnw.cmd .
-
-# Copy the project's pom.xml and source code
+# Copy only the essential files: pom.xml and the src folder
 COPY pom.xml .
 COPY src ./src
 
-# Grant execute permissions and build the project, skipping tests
-RUN chmod +x ./mvnw && ./mvnw package -DskipTests
+# Run the build directly with the 'mvn' command. No more mvnw!
+# This is cleaner and more reliable inside Docker.
+RUN mvn package -DskipTests
 
 # =================================================================
 # STAGE 2: Create the final, lightweight runtime image
