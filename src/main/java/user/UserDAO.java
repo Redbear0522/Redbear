@@ -12,7 +12,7 @@ public class UserDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	private Connection getConnection() {
+	/*private Connection getConnection() {
 		try {
 			//1단계
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -26,7 +26,9 @@ public class UserDAO {
 		}
 		return conn;
 	}
-	/*private Connection getConnection() throws Exception {
+	*/
+	
+	private Connection getConnection() throws Exception {
 		 // 1. Render 환경 변수에서 DB 정보를 각각 읽어옵니다.
 	    String db_host = System.getenv("DB_HOST");
 	    String db_name = System.getenv("DB_NAME");
@@ -45,7 +47,7 @@ public class UserDAO {
 	        Class.forName("oracle.jdbc.driver.OracleDriver");
 	        return DriverManager.getConnection("jdbc:oracle:thin:@58.73.200.225:1521:orcl", "java03", "1234");
 	    }
-	}*/
+	}
 	
 	private void disconnect() {
         try {if (rs != null && !rs.isClosed()) rs.close();        } catch (SQLException e) {            e.printStackTrace();        }

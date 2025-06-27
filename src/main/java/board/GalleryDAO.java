@@ -16,6 +16,7 @@ public class GalleryDAO {
 
 	private GalleryDAO() {}
 	
+	/*
     private Connection connect() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -29,7 +30,9 @@ public class GalleryDAO {
 		}
 		return conn;
 	}
-	/*private Connection connect() throws Exception {
+	*/
+	
+	private Connection connect() throws Exception {
 	    // 1. Render 환경 변수에서 DB 정보를 각각 읽어옵니다.
 	    String db_host = System.getenv("DB_HOST");
 	    String db_name = System.getenv("DB_NAME");
@@ -49,7 +52,7 @@ public class GalleryDAO {
 	        return DriverManager.getConnection("jdbc:oracle:thin:@58.73.200.225:1521:orcl", "java03", "1234");
 	    }
 	}
-*/
+
     private void disconnect() {
         try {
             if (rs != null && !rs.isClosed()) rs.close();

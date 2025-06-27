@@ -18,6 +18,7 @@ public class PostDAO {
 	}
 	private PostDAO() {}
 	
+	/*
     private Connection connect() {
 		try {
 			//1단계
@@ -32,7 +33,8 @@ public class PostDAO {
 		}
 		return conn;
 	}
-	/*private Connection connect() throws Exception {
+	*/
+	private Connection connect() throws Exception {
 		 // 1. Render 환경 변수에서 DB 정보를 각각 읽어옵니다.
 	    String db_host = System.getenv("DB_HOST");
 	    String db_name = System.getenv("DB_NAME");
@@ -51,7 +53,7 @@ public class PostDAO {
 	        Class.forName("oracle.jdbc.driver.OracleDriver");
 	        return DriverManager.getConnection("jdbc:oracle:thin:@58.73.200.225:1521:orcl", "java03", "1234");
 	    }
-	}*/
+	}
 
     private void disconnect() {
         try {

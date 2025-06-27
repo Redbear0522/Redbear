@@ -25,7 +25,7 @@
     }
 %>
     <h2>게시글 작성</h2>
-    <form action="writePro.jsp" method="post" enctype="multipart/form-data" name="write" onsubmit="return writeSave();">
+    <form action="<%=request.getContextPath() %>/writePro.jsp" method="post" enctype="multipart/form-data" name="write" onsubmit="return writeSave();">
         <table border="1" cellpadding="10">
            <tr>
 			    <td>작성자</td>
