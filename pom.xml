@@ -14,7 +14,7 @@
         <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
-    <dependencies>
+   <dependencies>
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -30,6 +30,17 @@
             <groupId>com.servlets</groupId>
             <artifactId>cos</artifactId>
             <version>05Nov2002</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>2.0.0</version>
         </dependency>
     </dependencies>
 
