@@ -8,6 +8,12 @@ RUN mvn package -DskipTests
 # STAGE 2: Deploy the WAR file to a standard Tomcat server
 FROM tomcat:9.0-jdk21-temurin
 
+# ==================== 추가된 부분 시작 ====================
+# 프로젝트의 tomcat-config/server.xml 파일을 
+# 이미지 안의 /usr/local/tomcat/conf/ 경로로 복사(덮어쓰기)합니다.
+COPY tomcat-config/server.xml /usr/local/tomcat/conf/
+# ==================== 추가된 부분 끝 ======================
+
 # 1단계(builder)에서 빌드된 .war 파일을 Tomcat의 webapps 폴더에 ROOT.war 라는 이름으로 복사합니다.
 # 이렇게 하면 웹사이트의 기본 경로(/)로 바로 접속할 수 있습니다.
 COPY --from=builder /app/target/m4-news-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
