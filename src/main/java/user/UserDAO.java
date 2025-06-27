@@ -63,7 +63,7 @@ public class UserDAO {
 			conn = getConnection();
 			// 3단계 SQL Query문 작성
 		    
-		        String sql = "INSERT INTO homepage values(?,?,?,?,?,?,?,?,?,?,?,sysdate)";
+		        String sql = "INSERT INTO homepage values(?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
 		        pstmt = conn.prepareStatement(sql);
 			//Statement 반복적으로 매번 실행 /PrepareStatement 이미 실행된 정보를 가지고 실행 / queryStatement 함수 실행할때 실행			
 			pstmt.setString(1, dto.getId());
