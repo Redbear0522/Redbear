@@ -132,7 +132,7 @@
             if (endPage > pageCount) endPage = pageCount;
             
             if (startPage > 10) { %>
-                <li class="page-item"><a class="page-link" href="<%=request.getContextPath() %>/gallery.jsp?pageNum=<%= startPage - 10 %>">이전</a></li>
+                <li class="page-item"><a class="page-link" href="/gallery.jsp?pageNum=<%= startPage - 10 %>">이전</a></li>
             <% }
             
             for (int i = startPage; i <= endPage; i++) { %>
@@ -142,7 +142,7 @@
             <% }
             
             if (endPage < pageCount) { %>
-                <li class="page-item"><a class="page-link" href="<%=request.getContextPath() %>/gallery.jsp?pageNum=<%= startPage + 10 %>">다음</a></li>
+                <li class="page-item"><a class="page-link" href="/gallery.jsp?pageNum=<%= startPage + 10 %>">다음</a></li>
             <% }
         } %>
         </ul>
