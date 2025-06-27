@@ -28,18 +28,26 @@ public class UserDAO {
 		return conn;
 	}*/
 	private Connection getConnection() throws Exception {
-	    String dbUrl = System.getenv("JDBC_DATABASE_URL"); // Heroku 환경변수
-	
-	    if (dbUrl != null && !dbUrl.isEmpty()) {
-	        // Heroku 환경일 때 (PostgreSQL)
-	        Class.forName("org.postgresql.Driver");
-	        return DriverManager.getConnection(dbUrl);
-	    } else {
-	        // 내 PC(로컬) 환경일 때 (Oracle)
-	        Class.forName("oracle.jdbc.driver.OracleDriver");
-	        return DriverManager.getConnection("jdbc:oracle:thin:@58.73.200.225:1521:orcl", "team01", "1234");
-	    }
-	}
+	    String dbUrl = System.getenv("JDBC_DATABASE_URL");
+	        if ((dbUrl == null || dbUrl.isBlank()) && System.getenv("DATABASE_URL") != null) {
+	            String raw = System.getenv("DATABASE_URL");
+	            if (raw.startsWith("postgres://")) {
+	                dbUrl = "jdbc:postgresql://" + raw.substring(11) + "?sslmode=require";
+	            } else {
+	                dbUrl = raw;
+	            }
+	 if (dbUrl != null && !dbUrl.isBlank()) {
+
+            Class.forName("org.postgresql.Driver");
+            return DriverManager.getConnection(dbUrl);
+        }
+        // Oracle 로컬 fallback
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        return DriverManager.getConnection(
+            "jdbc:oracle:thin:@58.73.200.225:1521:orcl",
+            "team01", "1234"
+        );
+     }
 	
 	private void disconnect() {
         try {if (rs != null && !rs.isClosed()) rs.close();        } catch (SQLException e) {            e.printStackTrace();        }
