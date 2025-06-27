@@ -107,8 +107,12 @@
     </table>
     
     <div class="d-flex justify-content-end mt-3" style="width: 15%; margin: auto;">
+<<<<<<< HEAD
         <input type="button" value="글쓰기" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>write.jsp'">
     </div>
+=======
+        <input type="button" value="글쓰기" class="btn btn-primary" onclick="location.href='/write.jsp'">
+>>>>>>> 69ba69427d1986b98071f276465aad87e0dbd62d
     
     <%-- 페이지네이션 --%>
     <div class="d-flex justify-content-center mt-4">
