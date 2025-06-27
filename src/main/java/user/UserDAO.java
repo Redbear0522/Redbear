@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import user.UserDTO;
 
 public class UserDAO {
@@ -47,6 +46,8 @@ public class UserDAO {
             "jdbc:oracle:thin:@58.73.200.225:1521:orcl",
             "team01", "1234"
         );
+        }
+			return conn;
      }
 	
 	private void disconnect() {
