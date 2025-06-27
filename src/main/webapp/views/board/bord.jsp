@@ -35,10 +35,6 @@
 <%@ include file="/resources/header/header.jsp" %>
 
 <center><B><h2 class="text-center">게시판 목록 (전체글: <%= count %>)</h2></B>
-<table width="80" class="table-generic">
-	<td align="right">
-	<a href="write.jsp">글싸기</a>
-</table>
 
 <table class="table table-bordered text-center" style="width: 80%; margin: auto;">
     <thead class="table-light">
