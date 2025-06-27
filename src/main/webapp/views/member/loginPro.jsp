@@ -15,7 +15,12 @@
 		
 		session.setAttribute("sid", dto.getId());
 		session.setAttribute("sname", dao.getUserById(dto.getId()).getName());
-		response.sendRedirect("/Redbear/views/main.jsp");
+		%>		
+		<script>
+		alert("로그인 되었습니다. ");
+		location.href = "<%=request.getContextPath()%>/views/main.jsp"; // 성공 시 메인 페이지로 이동
+		</script>
+<%
 		System.out.print(dao.getUserById("id"));
 		
 	}else{
