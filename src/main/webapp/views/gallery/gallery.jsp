@@ -78,7 +78,7 @@
                 <% } %>
                 
                 <%-- 글 제목을 클릭하면 해당 글로 이동합니다. --%>
-                <a href="view.jsp?num=<%= dto.getNum() %>&pageNum=<%= currentPage %>"><%= dto.getTitle() %></a>
+                <a href="<%=request.getContextPath() %>/view.jsp?num=<%= dto.getNum() %>&pageNum=<%= currentPage %>"><%= dto.getTitle() %></a>
                 
                 <%-- 조회수가 20 이상이면 [HOT] 아이콘을 표시합니다. --%>
                 <% if (dto.getReadcnt() >= 20) { %>
@@ -107,7 +107,7 @@
     </table>
     
     <div class="d-flex justify-content-end mt-3" style="width: 80%; margin: auto;">
-        <input type="button" value="글쓰기" class="btn btn-primary" onclick="location.href='write.jsp'">
+        <input type="button" value="글쓰기" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/write.jsp'">
     </div>
     
     <%-- 페이지네이션 --%>
@@ -128,17 +128,17 @@
             if (endPage > pageCount) endPage = pageCount;
             
             if (startPage > 10) { %>
-                <li class="page-item"><a class="page-link" href="gallery.jsp?pageNum=<%= startPage - 10 %>">이전</a></li>
+                <li class="page-item"><a class="page-link" href="<%=request.getContextPath() %>/gallery.jsp?pageNum=<%= startPage - 10 %>">이전</a></li>
             <% }
             
             for (int i = startPage; i <= endPage; i++) { %>
                 <li class="page-item <%= currentPage == i ? "active" : "" %>">
-                    <a class="page-link" href="gallery.jsp?pageNum=<%= i %>"><%= i %></a>
+                    <a class="page-link" href="<%=request.getContextPath() %>/gallery.jsp?pageNum=<%= i %>"><%= i %></a>
                 </li>
             <% }
             
             if (endPage < pageCount) { %>
-                <li class="page-item"><a class="page-link" href="gallery.jsp?pageNum=<%= startPage + 10 %>">다음</a></li>
+                <li class="page-item"><a class="page-link" href="<%=request.getContextPath() %>/gallery.jsp?pageNum=<%= startPage + 10 %>">다음</a></li>
             <% }
         } %>
         </ul>
