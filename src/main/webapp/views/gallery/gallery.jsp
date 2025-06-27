@@ -106,7 +106,7 @@
     </tbody>
     </table>
     
-    <div class="d-flex justify-content-end mt-3" style="width: 80%; margin: auto;">
+    <div class="d-flex justify-content-end mt-3" style="width: 15%; margin: auto;">
         <input type="button" value="글쓰기" class="btn btn-primary" onclick="location.href='<%=request.getContextPath() %>/write.jsp'">
     
     <%-- 페이지네이션 --%>
