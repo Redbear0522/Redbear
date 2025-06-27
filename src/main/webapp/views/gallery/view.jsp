@@ -71,16 +71,16 @@
   <tr height="30">      
     <td colspan="4"    align="right" > 
 	  <input type="button" value="수정" 
-       onclick="document.location.href='updateForm.jsp?num=<%=article.getNum()%>&pageNum=<%=pageNum%>'">
+       onclick="document.location.href='<%=request.getContextPath() %>/updateForm.jsp?num=<%=article.getNum()%>&pageNum=<%=pageNum%>'">
 	   &nbsp;&nbsp;&nbsp;&nbsp;
 	  <input type="button" value="삭제"
-       onclick="document.location.href='deleteForm.jsp?num=<%=article.getNum()%>&pageNum=<%=pageNum%>'">
+       onclick="document.location.href='<%=request.getContextPath() %>/deleteForm.jsp?num=<%=article.getNum()%>&pageNum=<%=pageNum%>'">
 	   &nbsp;&nbsp;&nbsp;&nbsp;
       <input type="button" value="답글쓰기" 
-       onclick="document.location.href='writeForm.jsp?num=<%=num%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%>'">
+       onclick="document.location.href='<%=request.getContextPath() %>/writeForm.jsp?num=<%=num%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%>'">
 	   &nbsp;&nbsp;&nbsp;&nbsp;
        <input type="button" value="글목록" 
-       onclick="document.location.href='list.jsp?pageNum=<%=pageNum%>'">
+       onclick="document.location.href='<%=request.getContextPath() %>/list.jsp?pageNum=<%=pageNum%>'">
     </td>
   </tr>
 </table>   
