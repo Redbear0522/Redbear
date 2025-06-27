@@ -1,24 +1,18 @@
-# STAGE 1: Build the WAR file
+# STAGE 1: Build the WAR file using Maven
 FROM maven:3-eclipse-temurin-21 AS builder
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn package -DskipTests
 
-# STAGE 2: Run the application using Jetty Runner
-FROM eclipse-temurin:21-jre
-WORKDIR /app
+# STAGE 2: Deploy the WAR file to a standard Tomcat server
+FROM tomcat:9.0-jdk21-temurin
 
-# Jetty 공식 실행기(Runner)를 직접 다운로드합니다.
-RUN apt-get update && apt-get install -y curl && \
-    curl -L -o jetty-runner.jar https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-runner/11.0.20/jetty-runner-11.0.20.jar
+# 1단계(builder)에서 빌드된 .war 파일을 Tomcat의 webapps 폴더에 ROOT.war 라는 이름으로 복사합니다.
+# 이렇게 하면 웹사이트의 기본 경로(/)로 바로 접속할 수 있습니다.
+COPY --from=builder /app/target/m4-news-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 
-# 1단계에서 빌드된 .war 파일을 복사합니다.
-COPY --from=builder /app/target/m4-news-1.0-SNAPSHOT.war .
-
-# 포트를 설정합니다.
+# Tomcat 서버는 8080 포트를 사용합니다.
 EXPOSE 8080
-ENV PORT 8080
 
-# Jetty Runner로 .war 파일을 실행합니다.
-CMD ["java", "-jar", "jetty-runner.jar", "m4-news-1.0-SNAPSHOT.war"]
+# Tomcat 이미지는 기본적으로 서버를 실행하는 CMD가 내장되어 있어 별도로 적을 필요가 없습니다.
