@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import user.UserDTO;
 
 public class UserDAO {
@@ -12,47 +13,36 @@ public class UserDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	/*private Connection getConnection() {
+	private Connection getConnection() {
 		try {
 			//1단계
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
 			//2단계
-			//String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
-			String url = "jdbc:oracle:thin:@58.73.200.225:1521:orcl";
+			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 			conn = DriverManager.getConnection(url, "java03", "1234");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return conn;
 	}
-	*/
-	
-	private Connection getConnection() throws Exception {
-		 // 1. Render 환경 변수에서 DB 정보를 각각 읽어옵니다.
-	    String db_host = System.getenv("DB_HOST");
-	    String db_name = System.getenv("DB_NAME");
-	    String db_user = System.getenv("DB_USER");
-	    String db_pass = System.getenv("DB_PASS");
-
-	    // 2. Render 환경(DB_HOST 변수가 존재할 때)인지 확인합니다.
-	    if (db_host != null && !db_host.isEmpty()) {
-	        // PostgreSQL 용 JDBC URL을 조립합니다. SSL 옵션을 포함합니다.
-	        String dbUrl = "jdbc:postgresql://" + db_host + "/" + db_name + "?sslmode=require";
-	        Class.forName("org.postgresql.Driver");
-	        // URL, 사용자 이름, 비밀번호를 각각 인자로 전달하여 연결합니다.
-	        return DriverManager.getConnection(dbUrl, db_user, db_pass);
-	    } else {
-	        // 3. 내 PC(로컬) 환경일 때 (Oracle)
-	        Class.forName("oracle.jdbc.driver.OracleDriver");
-	        return DriverManager.getConnection("jdbc:oracle:thin:@58.73.200.225:1521:orcl", "java03", "1234");
-	    }
-	}
 	
 	private void disconnect() {
-        try {if (rs != null && !rs.isClosed()) rs.close();        } catch (SQLException e) {            e.printStackTrace();        }
-        try {if (pstmt != null && !pstmt.isClosed()) pstmt.close();        } catch (SQLException e) {            e.printStackTrace();        }
-        try {if (conn != null && !conn.isClosed()) conn.close();        } catch (SQLException e) {            e.printStackTrace();        }
+        try {
+            if (rs != null && !rs.isClosed()) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (pstmt != null && !pstmt.isClosed()) pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (conn != null && !conn.isClosed()) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 	public boolean input(UserDTO dto) {
@@ -61,7 +51,7 @@ public class UserDAO {
 			conn = getConnection();
 			// 3단계 SQL Query문 작성
 		    
-		        String sql = "INSERT INTO homepage values(?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
+		        String sql = "INSERT INTO homepage values(?,?,?,?,?,?,?,?,?,?,?,sysdate)";
 		        pstmt = conn.prepareStatement(sql);
 			//Statement 반복적으로 매번 실행 /PrepareStatement 이미 실행된 정보를 가지고 실행 / queryStatement 함수 실행할때 실행			
 			pstmt.setString(1, dto.getId());

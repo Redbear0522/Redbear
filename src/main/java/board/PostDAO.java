@@ -18,41 +18,18 @@ public class PostDAO {
 	}
 	private PostDAO() {}
 	
-	/*
     private Connection connect() {
 		try {
 			//1단계
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
 			//2단계
-			//String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
-			String url = "jdbc:oracle:thin:@58.73.200.225:1521:orcl";
+			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 			conn = DriverManager.getConnection(url, "java03", "1234");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return conn;
-	}
-	*/
-	private Connection connect() throws Exception {
-		 // 1. Render 환경 변수에서 DB 정보를 각각 읽어옵니다.
-	    String db_host = System.getenv("DB_HOST");
-	    String db_name = System.getenv("DB_NAME");
-	    String db_user = System.getenv("DB_USER");
-	    String db_pass = System.getenv("DB_PASS");
-
-	    // 2. Render 환경(DB_HOST 변수가 존재할 때)인지 확인합니다.
-	    if (db_host != null && !db_host.isEmpty()) {
-	        // PostgreSQL 용 JDBC URL을 조립합니다. SSL 옵션을 포함합니다.
-	        String dbUrl = "jdbc:postgresql://" + db_host + "/" + db_name + "?sslmode=require";
-	        Class.forName("org.postgresql.Driver");
-	        // URL, 사용자 이름, 비밀번호를 각각 인자로 전달하여 연결합니다.
-	        return DriverManager.getConnection(dbUrl, db_user, db_pass);
-	    } else {
-	        // 3. 내 PC(로컬) 환경일 때 (Oracle)
-	        Class.forName("oracle.jdbc.driver.OracleDriver");
-	        return DriverManager.getConnection("jdbc:oracle:thin:@58.73.200.225:1521:orcl", "java03", "1234");
-	    }
 	}
 
     private void disconnect() {
@@ -118,7 +95,7 @@ public class PostDAO {
             
             // regdate와 readcnt는 DB에서 직접 처리하도록 SQL 수정
             sql = "insert into post(num, writer, title, content, pw, regdate, readcnt, ip, ref, re_step, re_level) "
-                + "values(post_sq.nextval, ?, ?, ?, ?, CURRENT_TIMESTAMP, 0, ?, ?, ?, ?)";
+                + "values(post_sq.nextval, ?, ?, ?, ?, sysdate, 0, ?, ?, ?, ?)";
 
             // ★★★ PreparedStatement 객체 재할당 ★★★
             pstmt = conn.prepareStatement(sql);
@@ -285,4 +262,38 @@ public class PostDAO {
 		}
 		return x;
 	}
+    public int deleteGallery(int num, String pw) {
+        int res = 0;
+        String sql = "DELETE FROM gallery WHERE num = ? AND pw = ?";
+        try {
+            connect();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, num);
+            pstmt.setString(2, pw);
+            res = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
+    public int updateGallery(PostDTO dto) {
+        int res = 0;
+        String sql = "UPDATE gallery SET title = ?, content = ? WHERE num = ? AND pw = ?";
+        try {
+            connect();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, dto.getTitle());
+            pstmt.setString(2, dto.getContent());
+            pstmt.setInt(3, dto.getNum());
+            pstmt.setString(4, dto.getPw());
+            res = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return res;
+    }
 }
