@@ -27,29 +27,24 @@ public class UserDAO {
 		return conn;
 	}*/
 	private Connection getConnection() throws Exception {
-	    String dbUrl = System.getenv("JDBC_DATABASE_URL");
+		 String db_host = System.getenv("DB_HOST");
+		    String db_name = System.getenv("DB_NAME");
+		    String db_user = System.getenv("DB_USER");
+		    String db_pass = System.getenv("DB_PASS");
 
-	    if ((dbUrl == null || dbUrl.isBlank()) && System.getenv("DATABASE_URL") != null) {
-	        String raw = System.getenv("DATABASE_URL");
-	        if (raw.startsWith("postgres://")) {
-	            dbUrl = "jdbc:postgresql://" + raw.substring(11) + "?sslmode=require";
-	        } else {
-	            dbUrl = raw;
-	        }
-	    }
-
-	    if (dbUrl != null && !dbUrl.isBlank()) {
-	        Class.forName("org.postgresql.Driver");
-	        return DriverManager.getConnection(dbUrl);
-	    } else {
-	        // fallback to Oracle (local test)
-	        Class.forName("oracle.jdbc.driver.OracleDriver");
-	        return DriverManager.getConnection(
-	            "jdbc:oracle:thin:@58.73.200.225:1521:orcl",
-	            "team01", "1234"
-	        );
-	    }
-	}
+		    // 2. Render 환경(DB_HOST 변수가 존재할 때)인지 확인합니다.
+		    if (db_host != null && !db_host.isEmpty()) {
+		        // PostgreSQL 용 JDBC URL을 조립합니다. SSL 옵션을 포함합니다.
+		        String dbUrl = "jdbc:postgresql://" + db_host + "/" + db_name + "?sslmode=require";
+		        Class.forName("org.postgresql.Driver");
+		        // URL, 사용자 이름, 비밀번호를 각각 인자로 전달하여 연결합니다.
+		        return DriverManager.getConnection(dbUrl, db_user, db_pass);
+		    } else {
+		        // 3. 내 PC(로컬) 환경일 때 (Oracle)
+		        Class.forName("oracle.jdbc.driver.OracleDriver");
+		        return DriverManager.getConnection("jdbc:oracle:thin:@192.168.219.198:1521:orcl", "team01", "1234");
+		    }
+		}
 	
 	private void disconnect() {
         try {if (rs != null && !rs.isClosed()) rs.close();        } catch (SQLException e) {            e.printStackTrace();        }
