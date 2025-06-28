@@ -3,6 +3,10 @@
 <%@page import = "board.PostDAO" %>
 <%@page import = "board.PostDTO" %>
 <%@page import = "java.text.SimpleDateFormat" %>
+<<<<<<< HEAD
+=======
+
+>>>>>>> d7c54c289e5b8ccdde087ed54d1424c17e1b1fe6
 <% request.setCharacterEncoding("UTF-8");%>
 <html>
 <head>
@@ -46,7 +50,12 @@
         <th scope="row">작성자</th>
         <td><%= post.getWriter() %></td>
         <th scope="row">작성일</th>
+<<<<<<< HEAD
         <td><%= post.getRegdate() %></td>
+=======
+        <td><%= post.getRegdate().toString().substring(0, 16) %></td>
+		
+>>>>>>> d7c54c289e5b8ccdde087ed54d1424c17e1b1fe6
       </tr>
  <tr>
         <th scope="row">제목</th>
@@ -55,7 +64,11 @@
 
       <tr>
         <th scope="row" style="vertical-align: top;">내용</th>
+<<<<<<< HEAD
         <td colspan="3" style="height: 30%; width: 60%; white-space: pre-wrap;"><%= post.getContent() %></td>
+=======
+        <td colspan="3" style="height: 300; width: 600; white-space: pre-wrap;"><%= post.getContent() %></td>
+>>>>>>> d7c54c289e5b8ccdde087ed54d1424c17e1b1fe6
 
       </tr>
 <%

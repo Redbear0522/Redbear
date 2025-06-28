@@ -91,4 +91,4 @@ public class GalleryDTO {
 		this.re_level = re_level;
 	}
     
-    }
+}

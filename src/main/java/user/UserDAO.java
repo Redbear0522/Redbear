@@ -33,17 +33,24 @@ public class UserDAO {
 	}
 	 /*
 	private Connection getConnection() {
+=======
+>>>>>>> d7c54c289e5b8ccdde087ed54d1424c17e1b1fe6
 		try {
 			//1단계
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
 			//2단계
+<<<<<<< HEAD
 			String url = "jdbc:oracle:thin:@58.73.200.225:1521:orcl";
+=======
+			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
+>>>>>>> d7c54c289e5b8ccdde087ed54d1424c17e1b1fe6
 			conn = DriverManager.getConnection(url, "java03", "1234");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return conn;
+<<<<<<< HEAD
 	}*/
 	
 	private void disconnect() {
@@ -99,7 +106,6 @@ public class UserDAO {
 	        return false;
 	    }
 	}
-
 
 	public boolean checkid(UserDTO dto) {
 		boolean result = false;
@@ -210,9 +216,6 @@ public class UserDAO {
 		} finally {	
 			disconnect();
 		}
-		
-		
-		
 	}
 	
 	public String getProfile(String id) {

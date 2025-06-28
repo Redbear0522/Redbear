@@ -131,7 +131,11 @@ input, select {
 }
 
 /* 테이블 자체는 그대로 유지 */
+<<<<<<< HEAD
 table {
+=======
+table-generic {
+>>>>>>> d7c54c289e5b8ccdde087ed54d1424c17e1b1fe6
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
@@ -166,7 +170,11 @@ tr:hover {
 }
 
 /* 게시판 테이블 기본 스타일 */
+<<<<<<< HEAD
 table {
+=======
+table-board {
+>>>>>>> d7c54c289e5b8ccdde087ed54d1424c17e1b1fe6
   width: 80%;
   margin: 40px auto;
   border-collapse: collapse;
@@ -315,6 +323,7 @@ td[colspan="5"] {
     margin-right: 5px;
 }
 
+<<<<<<< HEAD
  /* Main Page Card Layout */
 .main-container {
     display: flex;
@@ -447,3 +456,7 @@ td[colspan="5"] {
         color: #6c757d;
         margin-top: auto;
     }
+=======
+ 
+  
+>>>>>>> d7c54c289e5b8ccdde087ed54d1424c17e1b1fe6

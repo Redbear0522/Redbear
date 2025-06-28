@@ -36,6 +36,7 @@
         return; // 더 이상 진행하지 않도록 처리
     }
 %>
+<<<<<<< HEAD
 <form method="post" name="update" action="updatePro.jsp?pageNum=<%=pageNum%>" onsubmit="return writeSave()">
 <input type="hidden" name="num" value="<%=num%>">
 <table class="board-table" style="margin: 0 auto; width: 70%;">

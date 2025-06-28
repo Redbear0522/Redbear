@@ -156,6 +156,7 @@
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<<<<<<< HEAD
 <script src="<%=request.getContextPath()%>/resources/js/viewmember.js"></script>
 <script>
   // 아이디 중복 확인
