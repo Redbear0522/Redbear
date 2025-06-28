@@ -36,15 +36,23 @@
         return; // 더 이상 진행하지 않도록 처리
     }
 %>
-<<<<<<< HEAD
 <form method="post" name="update" action="updatePro.jsp?pageNum=<%=pageNum%>" onsubmit="return writeSave()">
 <input type="hidden" name="num" value="<%=num%>">
+
 <table class="board-table" style="margin: 0 auto; width: 70%;">
     <tr>
     <td  width="70"     align="center" >제 목</td>
     <td align="left" width="330">
         <input type="text" name="title" value="<%=article.getTitle()%>">
   </tr>
+<tr>   
+<td width="70"     align="center"> 
+      <label>사 진</label>
+      
+      <td><div class="mb-3"><input type="file" name="upfile" accept="image/*" class="form-control" required></td>
+    </div></td>
+    
+    </tr>
   <tr>
     <td  width="70"     align="center" >내 용</td>
     <td align="left" width="330">
@@ -52,12 +60,10 @@
   </tr>
   <tr>
     <td  width="70"     align="center" >비밀번호</td>
-    <td align="left" width="330" >
-      <input type="password" name="pw">
-     
-	 </td>
+    <td align="left" width="330">
+     <input type="password" name="pw" value="<%=article.getPw()%>">
   </tr>
-  <tr>      
+    <tr>      
    <td colspan=2    align="center"> 
      <input type="submit" value="글수정" >  
      <input type="reset" value="다시 작성">

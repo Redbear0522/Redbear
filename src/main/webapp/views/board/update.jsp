@@ -47,7 +47,7 @@
   <tr>
     <td  width="70"     align="center" >내 용</td>
     <td align="left" width="330">
-     <textarea name="content"><%=article.getContent()%></textarea>
+     <textarea name="content" rows="10" cols="50"><%=article.getContent()%></textarea>
   </tr>
   <tr>
     <td  width="70"     align="center" >비밀번호</td>

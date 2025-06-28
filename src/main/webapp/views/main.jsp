@@ -45,7 +45,7 @@
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">사진 갤러리</h5>
                         <p class="card-text flex-grow-1">소중한 추억을 공유해요.</p>
-                        <a href="<%=request.getContextPath()%>/gallery/gallery.jsp" class="btn btn-primary mt-auto">이동하기</a>
+                        <a href="<%=request.getContextPath()%>/views/gallery/gallery.jsp" class="btn btn-primary">이동</a>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                     <div class="card-body">
                         <h5 class="card-title">사진 갤러리</h5>
                         <p class="card-text">소중한 추억을 공유해요.</p>
-                        <a href="gallery.jsp" class="btn btn-primary">이동하기</a>
+                        <a href="<%=request.getContextPath()%>/views/gallery/gallery.jsp" class="btn btn-primary">이동</a>
                     </div>
                 </div>
             </div>

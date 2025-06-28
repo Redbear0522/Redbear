@@ -32,12 +32,12 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>번호</th>
-        <th>사진</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>작성일</th>
-        <th>조회수</th>
+        <th style="width:5%;" >번호</th>
+        <th style="width:10%;">사진</th>
+        <th style="width:60%;">제목</th>
+        <th style="width:10%;">작성자</th>
+        <th style="width:10%;">작성일</th>
+        <th style="width:5%;">조회수</th>
       </tr>
     </thead>
     <tbody>
@@ -48,17 +48,10 @@
     <td><%= g.getNum() %></td>
     <td>
       <a href="view.jsp?num=<%=g.getNum()%>">
-
-        <!-- ★★★★★ 가장 중요한 변경점 ★★★★★ -->
-        <!-- 
-          이전에는 FileServlet을 통해 이미지를 불러왔지만,
-          이제 g.getImage() 변수 안에 "[https://res.cloudinary.com/](https://res.cloudinary.com/)..." 와 같은
-          완전한 이미지 주소가 들어있으므로, src에 바로 넣어주기만 하면 됩니다.
-        -->
         <img src="<%= g.getImage() %>" 
              class="img-thumbnail" 
              style="width:120px;height:90px;object-fit:cover;" 
-             alt="<%= g.getTitle() %> 이미지">
+             ">
       </a>
     </td>
     <td><a href="view.jsp?num=<%= g.getNum() %>"><%= g.getTitle() %></a></td>

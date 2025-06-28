@@ -15,7 +15,7 @@
 	int check = pd.updateGallery(article);
 	
 	if(check ==1){%>
-		<meta http-equiv="Refresh" content="0;url=bord.jsp?pageNum=<%=pageNum%>">
+		<meta http-equiv="Refresh" content="0;url=gallery.jsp?pageNum=<%=pageNum%>">
 	<%}else{%>
 	<script >
 		alert("비밀번호 확인하세요");

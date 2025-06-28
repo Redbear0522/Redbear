@@ -57,7 +57,7 @@
     <td align=center  >
       <input type="submit" value="글삭제" >
       <input type="button" value="글목록"
-       onclick="document.location.href='bord.jsp?pageNum=<%=pageNum%>'">     
+       onclick="document.location.href='gallery.jsp?pageNum=<%=pageNum%>'">     
    </td>
  </tr>  
 </table> 

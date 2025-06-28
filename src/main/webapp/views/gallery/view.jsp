@@ -22,11 +22,11 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	GalleryDAO pdPro = GalleryDAO.getInstance();
-	GalleryDTO Gallery =  pdPro.getGallery(num);
+	GalleryDTO post = GalleryDAO.getInstance().getGallery(num);
 
-	int ref=Gallery.getRef();
-	int re_step=Gallery.getRe_step();
-	int re_level=Gallery.getRe_level();
+	int ref=post.getRef();
+	int re_step=post.getRe_step();
+	int re_level=post.getRe_level();
 %>
 </head>
 <body>
@@ -38,33 +38,28 @@
 <tbody>
       <tr>
         <th scope="row" style="width:15%;">글번호</th>
-        <td style="width:20%;"><%= Gallery.getNum() %></td>
+        <td style="width:20%;"><%= post.getNum() %></td>
         <th scope="row" style="width:15%;">조회수</th>
-        <td style="width:20%;"><%= Gallery.getReadcnt() %></td>
+        <td style="width:20%;"><%= post.getReadcnt() %></td>
       </tr>
 <tr>
         <th scope="row">작성자</th>
-        <td><%= Gallery.getWriter() %></td>
+        <td><%= post.getWriter() %></td>
         <th scope="row">작성일</th>
-        <td><%= Gallery.getRegdate() %></td>
+        <td><%= post.getRegdate() %></td>
       </tr>
  <tr>
         <th scope="row">제목</th>
-        <td colspan="3"><strong><%= Gallery.getTitle() %></strong></td>
+        <td colspan="3"><strong><%= post.getTitle() %></strong></td>
 </tr>
-
- <tr>
-        <th scope="row">제목</th>
-        <td colspan="3"><strong><%= Gallery.getTitle() %></strong></td>
-</tr>
-		<tr>
+ 		<tr>
 		        <th scope="row">사진</th>
-		        <td colspan="3"><strong><%= Gallery.getImage() %></strong></td>
+		        <td colspan="3"><img src="<%= post.getImage() %>"class="img-thumbnail"style="width:600px;height:450px;object-fit:cover;"></td>
 		</tr>
 
       <tr>
         <th scope="row" style="vertical-align: top;">내용</th>
-        <td colspan="3" style="height: 30%; width: 60%; white-space: pre-wrap;"><%= Gallery.getContent() %></td>
+        <td colspan="3" style="height: 30%; width: 60%; white-space: pre-wrap;"><%= post.getContent() %></td>
 
       </tr>
 <%
@@ -75,11 +70,9 @@
 <tr height="30">      
       <td colspan="4" class="text-center">
           <button type="button" class="btn btn-primary me-2"
-            onclick="location.href='update.jsp?num=<%= Gallery.getNum() %>&pageNum=<%= pageNum %>'">글수정</button>
+            onclick="location.href='update.jsp?num=<%= post.getNum() %>&pageNum=<%= pageNum %>'">글수정</button>
           <button type="button" class="btn btn-danger me-2"
-            onclick="location.href='delete.jsp?num=<%= Gallery.getNum() %>&pageNum=<%= pageNum %>'">글삭제</button>
-          <button type="button" class="btn btn-success me-2"
-            onclick="location.href='write.jsp?num=<%= num %>&ref=<%= ref %>&re_step=<%= re_step %>&re_level=<%= re_level %>'">답글쓰기</button>
+            onclick="location.href='delete.jsp?num=<%= post.getNum() %>&pageNum=<%= pageNum %>'">글삭제</button>
           <button type="button" class="btn btn-secondary"
             onclick="location.href='bord.jsp?pageNum=<%= pageNum %>'">글목록</button>
     </td>
