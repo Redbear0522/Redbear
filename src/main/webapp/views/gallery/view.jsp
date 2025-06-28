@@ -53,6 +53,15 @@
         <td colspan="3"><strong><%= Gallery.getTitle() %></strong></td>
 </tr>
 
+ <tr>
+        <th scope="row">제목</th>
+        <td colspan="3"><strong><%= Gallery.getTitle() %></strong></td>
+</tr>
+		<tr>
+		        <th scope="row">사진</th>
+		        <td colspan="3"><strong><%= Gallery.getImage() %></strong></td>
+		</tr>
+
       <tr>
         <th scope="row" style="vertical-align: top;">내용</th>
         <td colspan="3" style="height: 30%; width: 60%; white-space: pre-wrap;"><%= Gallery.getContent() %></td>

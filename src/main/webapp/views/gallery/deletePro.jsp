@@ -13,7 +13,7 @@
 	GalleryDAO pd = GalleryDAO.getInstance();
 	int check = pd.deleteGallery(num, pw);
 	if(check == 1){%>
-		<meta http-equiv = "Refresh" content="0;url=bord.jsp?pageNum=<%=pageNum%>">
+		<meta http-equiv = "Refresh" content="0;url=gallery.jsp?pageNum=<%=pageNum%>">
 	<%}else{%>
 		<script>
         alert("비밀번호가 틀렸거나 게시물이 존재하지 않습니다.");

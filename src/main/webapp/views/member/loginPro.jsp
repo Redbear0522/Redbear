@@ -15,7 +15,7 @@
 		
 		session.setAttribute("sid", dto.getId());
 		session.setAttribute("sname", dao.getUserById(dto.getId()).getName());
-		response.sendRedirect("/Redbear/views/main.jsp");
+		response.sendRedirect("request.getContextPath()/Redbear/views/main.jsp");
 		System.out.print(dao.getUserById("id"));
 		
 	}else{
