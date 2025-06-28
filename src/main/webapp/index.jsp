@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <%
-   response.sendRedirect("views/gallery/gallery.jsp");
+   response.sendRedirect("views/main.jsp");
 %>
 <head>
 <meta charset="UTF-8">
