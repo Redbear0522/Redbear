@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List, board.GalleryDTO, board.GalleryDAO"%>
 <%
@@ -42,24 +41,37 @@
       </tr>
     </thead>
     <tbody>
-      <% if (galleryList != null && !galleryList.isEmpty()) {
-           for (GalleryDTO g : galleryList) { %>
-      <tr>
-        <td><%= g.getNum() %></td>
-        <td><a href="view.jsp?num=<%=g.getNum()%>">
-            <img src="uploads/<%=g.getImage()%>" class="img-thumbnail" style="width:120px;height:90px;object-fit:cover;">
-          </a></td>
-        <td><a href="view.jsp?num=<%= g.getNum() %>"><%= g.getTitle() %></a></td>
-        <td><%= g.getWriter() %></td>
-        <td><%= g.getRegdate() %></td>
-        <td><%= g.getReadcnt() %></td>
-      </tr>
-      <%   }
-         } else { %>
-      <tr>
-        <td colspan="6" class="text-center">등록된 글이 없습니다.</td>
-      </tr>
-      <% } %>
+      
+<% if (galleryList != null && !galleryList.isEmpty()) {
+       for (GalleryDTO g : galleryList) { %>
+  <tr>
+    <td><%= g.getNum() %></td>
+    <td>
+      <a href="view.jsp?num=<%=g.getNum()%>">
+
+        <!-- ★★★★★ 가장 중요한 변경점 ★★★★★ -->
+        <!-- 
+          이전에는 FileServlet을 통해 이미지를 불러왔지만,
+          이제 g.getImage() 변수 안에 "[https://res.cloudinary.com/](https://res.cloudinary.com/)..." 와 같은
+          완전한 이미지 주소가 들어있으므로, src에 바로 넣어주기만 하면 됩니다.
+        -->
+        <img src="<%= g.getImage() %>" 
+             class="img-thumbnail" 
+             style="width:120px;height:90px;object-fit:cover;" 
+             alt="<%= g.getTitle() %> 이미지">
+      </a>
+    </td>
+    <td><a href="view.jsp?num=<%= g.getNum() %>"><%= g.getTitle() %></a></td>
+    <td><%= g.getWriter() %></td>
+    <td><%= g.getRegdate() %></td>
+    <td><%= g.getReadcnt() %></td>
+  </tr>
+<%   }
+     } else { %>
+  <tr>
+    <td colspan="6" class="text-center">등록된 글이 없습니다.</td>
+  </tr>
+<% } %>
     </tbody>
   </table>
   <nav>

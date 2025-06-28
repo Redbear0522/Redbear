@@ -14,14 +14,8 @@ function inputCheck(){
 	}
 	if(pw.value != pw2.value){
 		alert("비밀번호를 확인하시오");
-<<<<<<< HEAD
 		pw.vlaue="";
 		pw2.vlaue="";
-=======
-		// [수정] vlaue -> value 오타 수정
-		pw.value="";
-		pw2.value="";
->>>>>>> d7c54c289e5b8ccdde087ed54d1424c17e1b1fe6
 		pw.focus();
 		return false;
 	}
