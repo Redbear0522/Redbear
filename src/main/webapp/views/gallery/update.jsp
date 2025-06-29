@@ -36,7 +36,9 @@
         return; // 더 이상 진행하지 않도록 처리
     }
 %>
-<form method="post"enctype="multipart/form-data"name="update"action="<%=request.getContextPath()%>/gallery/updatePro?pageNum=<%=pageNum%>"onsubmit="return writeSave()">
+<form method="post"
+      enctype="multipart/form-data"
+      action="<%= request.getContextPath() %>/views/gallery/updatePro.jsp?num=<%=num%>&pageNum=<%=pageNum%>">
 <input type="hidden" name="num" value="<%=num%>">
 
 <table class="board-table" style="margin: 0 auto; width: 70%;">

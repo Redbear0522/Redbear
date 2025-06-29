@@ -2,10 +2,10 @@ package board;
 
 import java.io.IOException;
 import java.util.Map;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
@@ -54,4 +54,13 @@ public class UpdateProServlet extends HttpServlet {
                 + "</script>");
         }
     }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        resp.setContentType("text/plain; charset=UTF-8");
+        resp.getWriter().println("UpdateProServlet 연결 OK");
+        
+    }
+    
+    
 }

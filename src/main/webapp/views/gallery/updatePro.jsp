@@ -4,6 +4,25 @@
 <%@ page import = "board.GalleryDTO" %>
 <%@ page import = "board.GalleryDAO" %>
 <%@ page import = "java.sql.Timestamp" %>
+<%@ page import="org.apache.commons.fileupload.*,org.apache.commons.fileupload.servlet.*,org.apache.commons.fileupload.disk.*"%>
+<%
+  DiskFileItemFactory factory = new DiskFileItemFactory();
+  ServletFileUpload upload = new ServletFileUpload(factory);
+  Map<String,String> form = new HashMap<>();
+  String imageUrl = null;
+  for (FileItem item : upload.parseRequest(request)) {
+    if (item.isFormField()) {
+      form.put(item.getFieldName(), item.getString("UTF-8"));
+    } else {
+      // 파일 업로드 처리 (cloudinary 로직 재사용)
+      imageUrl = uploadToCloudinary(item.getInputStream());
+    }
+  }
+  // DTO에 form.get("title"), form.get("content"), form.get("pw") 등 세팅,
+  // dto.setImage(imageUrl) 도 세팅 후
+  int updated = GalleryDAO.getInstance().updateGallery(dto);
+  // 리다이렉트/스크립트 알림 처리...
+%>
 
 <jsp:useBean id="article" scope="page" class="board.GalleryDTO">
 <jsp:setProperty name="article" property="*"/>
@@ -22,3 +41,4 @@
 		history.go(-1);
 	</script>
 	<%}%>
+	
