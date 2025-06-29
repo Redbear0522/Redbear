@@ -54,7 +54,7 @@
 </tr>
  		<tr>
 		        <th scope="row">사진</th>
-		        <td colspan="3"><img src="<%= post.getImage() %>"class="img-thumbnail"style="width:600px;height:450px;object-fit:cover;"></td>
+		        <td colspan="3"><img src="<%= post.getImage() %>" class="img-thumbnail" style="width:600px;height:450px;object-fit:cover;"></td>
 		</tr>
 
       <tr>

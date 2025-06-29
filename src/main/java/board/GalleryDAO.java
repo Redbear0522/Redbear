@@ -103,8 +103,8 @@ public class GalleryDAO {
         int limit  = end - start + 1;
         int offset = start - 1;
         String sql =
-            "SELECT num,writer,title,pw,regdate,ref,re_step,re_level,content,ip,readcnt " +
-            "FROM Gallery " +
+        		"SELECT num,writer,title,pw,regdate,ref,re_step,re_level,content,ip,readcnt,image " +
+        		"FROM Gallery " +
             "ORDER BY ref DESC,re_step ASC " +
             "LIMIT ? OFFSET ?";
         try {
@@ -121,6 +121,7 @@ public class GalleryDAO {
                 dto.setPw(rs.getString("pw"));
                 dto.setRegdate(rs.getDate("regdate").toString());
                 dto.setReadcnt(rs.getInt("readcnt"));
+                dto.setImage   (rs.getString("image")); 
                 dto.setRef(rs.getInt("ref"));
                 dto.setRe_step(rs.getInt("re_step"));
                 dto.setRe_level(rs.getInt("re_level"));
@@ -139,7 +140,7 @@ public class GalleryDAO {
     /** 3. 글 보기 */
     public GalleryDTO getGallery(int num) {
         GalleryDTO dto = null;
-        String sql = "SELECT * FROM Gallery WHERE num = ?";
+        String sql = "SELECT *, image FROM Gallery WHERE num = ?";
         try {
             conn = connect();
             pstmt = conn.prepareStatement(sql);
@@ -153,6 +154,7 @@ public class GalleryDAO {
                 dto.setContent(rs.getString("content"));
                 dto.setRegdate(rs.getDate("regdate").toString());
                 dto.setReadcnt(rs.getInt("readcnt"));
+                dto.setImage   (rs.getString("image"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

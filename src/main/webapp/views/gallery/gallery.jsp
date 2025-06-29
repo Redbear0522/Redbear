@@ -48,10 +48,7 @@
     <td><%= g.getNum() %></td>
     <td>
       <a href="view.jsp?num=<%=g.getNum()%>">
-        <img src="<%= g.getImage() %>" 
-             class="img-thumbnail" 
-             style="width:120px;height:90px;object-fit:cover;" 
-             ">
+        <img src="<%= g.getImage() %>" class="img-thumbnail" style="width:120px;height:90px;object-fit:cover;">
       </a>
     </td>
     <td><a href="view.jsp?num=<%= g.getNum() %>"><%= g.getTitle() %></a></td>
