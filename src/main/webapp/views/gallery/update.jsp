@@ -17,9 +17,7 @@
 </head>
 <body>
 <jsp:include page="/resources/header/header.jsp" />
-<form method="post"
-      enctype="multipart/form-data"
-      action="${pageContext.request.contextPath}/gallery/updatePro?num=${num}&pageNum=${pageNum}">
+<form action="/gallery/updatePro" method="post" enctype="multipart/form-data">
   <input type="hidden" name="num" value="${num}">
   <table class="table" style="width:70%; margin:2em auto;">
     <tr>

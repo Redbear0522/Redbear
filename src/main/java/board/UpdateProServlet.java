@@ -1,5 +1,6 @@
 package board;
-
+import java.util.Map;
+import java.util.HashMap;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -8,10 +9,10 @@ import javax.servlet.http.*;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-@WebServlet("/gallery/updatePro")
-@MultipartConfig
-public class UpdateProServlet extends HttpServlet {
-    private Cloudinary cloudinary;
+	@WebServlet("/gallery/updatePro")
+	@MultipartConfig
+	public class UpdateProServlet extends HttpServlet {
+	    private Cloudinary cloudinary;
 
     @Override
     public void init() throws ServletException {
