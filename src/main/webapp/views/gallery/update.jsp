@@ -1,85 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<% request.setCharacterEncoding("UTF-8");%>
-<%@ page import = "board.GalleryDTO" %>
-<%@ page import = "board.GalleryDAO" %>    
+         pageEncoding="UTF-8" %>
+<%@ page import="board.GalleryDAO, board.GalleryDTO" %>
+<%
+    request.setCharacterEncoding("UTF-8");
+    int num = Integer.parseInt(request.getParameter("num"));
+    String pageNum = request.getParameter("pageNum");
+    GalleryDTO article = GalleryDAO.getInstance().getGallery(num);
+%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>글 수정</title>
-<%
-  int num = Integer.parseInt(request.getParameter("num"));
-  String pageNum = request.getParameter("pageNum");
-  try{
-      GalleryDAO pd = GalleryDAO.getInstance();
-      GalleryDTO article = pd.getGallery(num);
-
-%>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/theme.css">
+  <meta charset="UTF-8">
+  <title>게시글 수정</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 </head>
 <body>
-<%@ include file="/resources/header/header.jsp"%>
-<%
-    // 직접 sid 변수 선언하지 않고 세션에서 꺼내서 체크
-    if (session.getAttribute("sid") == null) {
-%>
-    <script>
-        alert("로그인 후 이용 가능합니다.");
-        history.back();
-    </script>
-<%
-        return; // 더 이상 진행하지 않도록 처리
-    }
-%>
+<jsp:include page="/resources/header/header.jsp" />
 <form method="post"
       enctype="multipart/form-data"
-      action="<%= request.getContextPath() %>/views/gallery/updatePro.jsp?num=<%=num%>&pageNum=<%=pageNum%>">
-<input type="hidden" name="num" value="<%=num%>">
-
-<table class="board-table" style="margin: 0 auto; width: 70%;">
+      action="${pageContext.request.contextPath}/gallery/updatePro?num=${num}&pageNum=${pageNum}">
+  <input type="hidden" name="num" value="${num}">
+  <table class="table" style="width:70%; margin:2em auto;">
     <tr>
-    <td  width="70"     align="center" >제 목</td>
-    <td align="left" width="330">
-        <input type="text" name="title" value="<%=article.getTitle()%>">
-  </tr>
-<tr>   
-<td width="70"     align="center"> 
-      <label>사 진</label>
-      
-      <td><div class="mb-3"><input type="file" name="upfile" accept="image/*" class="form-control" required></td>
-    </div></td>
-    
+      <th>제목</th>
+      <td><input class="form-control" type="text" name="title"
+                 value="${article.title}" required></td>
     </tr>
-  <tr>
-    <td  width="70"     align="center" >내 용</td>
-    <td align="left" width="330">
-     <textarea name="content"><%=article.getContent()%></textarea>
-  </tr>
-  <tr>
-    <td  width="70"     align="center" >비밀번호</td>
-    <td align="left" width="330">
-     <input type="password" name="pw" value="<%=article.getPw()%>">
-  </tr>
-    <tr>      
-   <td colspan=2    align="center"> 
-     <input type="submit" value="글수정" >  
-     <input type="reset" value="다시 작성">
-     <input type="button" value="글목록" 
-       onclick="document.location.href='bord.jsp?pageNum=<%=pageNum%>'">
-   </td>
- </tr>
- </table>
+    <tr>
+      <th>사진</th>
+      <td><input class="form-control" type="file" name="upfile" accept="image/*"></td>
+    </tr>
+    <tr>
+      <th>내용</th>
+      <td><textarea class="form-control" name="content"
+                    required>${article.content}</textarea></td>
+    </tr>
+    <tr>
+      <th>비밀번호</th>
+      <td><input class="form-control" type="password" name="pw" required></td>
+    </tr>
+    <tr>
+      <td colspan="2" class="text-center">
+        <button class="btn btn-primary" type="submit">수정</button>
+        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/gallery/list?pageNum=${pageNum}">목록</a>
+      </td>
+    </tr>
+  </table>
 </form>
-<%
-}catch(Exception e){}%>      
-<%@ include file="/resources/footer/footer.jsp"%>
-
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<jsp:include page="/resources/footer/footer.jsp" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
+</html>
