@@ -10,9 +10,9 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
 	//@WebServlet("/gallery/updatePro")
-	@MultipartConfig
-	public class UpdateProServlet extends HttpServlet {
-	    private Cloudinary cloudinary;
+	//@MultipartConfig
+	//public class UpdateProServlet extends HttpServlet {
+	//    private Cloudinary cloudinary;
 
     @Override
     public void init() throws ServletException {
