@@ -18,7 +18,8 @@
 <body>
 <jsp:include page="/resources/header/header.jsp" />
 <form action="/gallery/updatePro" method="post" enctype="multipart/form-data">
-  <input type="hidden" name="num" value="${num}">
+  <input type="hidden" name="num" value="${dto.num}">
+    <input type="hidden" name="pageNum" value="${param.pageNum}">
   <table class="table" style="width:70%; margin:2em auto;">
     <tr>
       <th>제목</th>
@@ -27,12 +28,11 @@
     </tr>
     <tr>
       <th>사진</th>
-      <td><input class="form-control" type="file" name="upfile" accept="image/*"></td>
+      <td><input class="form-control" type="file" name="upfile" accept="image/* " value="${article.img}"></td>
     </tr>
     <tr>
       <th>내용</th>
-      <td><textarea class="form-control" name="content"
-                    required>${article.content}</textarea></td>
+      <td><textarea class="form-control" name="content" required>${article.content}</textarea></td>
     </tr>
     <tr>
       <th>비밀번호</th>
