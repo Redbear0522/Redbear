@@ -7,13 +7,13 @@
   
   <!-- UpdateProServlet 직접 매핑 -->
   <servlet>
-    <servlet-name>UpdatePro</servlet-name>
-    <servlet-class>board.UpdateProServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdatePro</servlet-name>
-    <url-pattern>/gallery/updatePro</url-pattern>
-  </servlet-mapping>
+  <servlet-name>UpdatePro</servlet-name>
+  <servlet-class>board.UpdateProServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>UpdatePro</servlet-name>
+  <url-pattern>/gallery/updatePro</url-pattern>
+</servlet-mapping>
 
   <!-- (테스트용) TestServlet 매핑 -->
   <servlet>

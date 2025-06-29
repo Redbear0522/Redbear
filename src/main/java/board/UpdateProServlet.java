@@ -9,7 +9,7 @@ import javax.servlet.http.*;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-	@WebServlet("/gallery/updatePro")
+	//@WebServlet("/gallery/updatePro")
 	@MultipartConfig
 	public class UpdateProServlet extends HttpServlet {
 	    private Cloudinary cloudinary;
