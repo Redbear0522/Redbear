@@ -182,14 +182,15 @@ public class GalleryDAO {
     /** 5. 글 수정 */
     public int updateGallery(GalleryDTO dto) {
         int res = 0;
-        String sql = "UPDATE Gallery SET title = ?, content = ? WHERE num = ? AND pw = ?";
+        String sql = "UPDATE Gallery "+ "SET title = ?, content = ?, image = ? "+ "WHERE num = ? AND pw = ?";
         try {
             conn = connect();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, dto.getTitle());
             pstmt.setString(2, dto.getContent());
-            pstmt.setInt(3, dto.getNum());
-            pstmt.setString(4, dto.getPw());
+            pstmt.setString(3, dto.getImage());    // ← 새로 추가
+            pstmt.setInt   (4, dto.getNum());
+            pstmt.setString(5, dto.getPw());
             res = pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

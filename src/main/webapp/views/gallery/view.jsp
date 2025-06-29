@@ -74,7 +74,7 @@
           <button type="button" class="btn btn-danger me-2"
             onclick="location.href='delete.jsp?num=<%= post.getNum() %>&pageNum=<%= pageNum %>'">글삭제</button>
           <button type="button" class="btn btn-secondary"
-            onclick="location.href='bord.jsp?pageNum=<%= pageNum %>'">글목록</button>
+            onclick="location.href='gallery.jsp?pageNum=<%= pageNum %>'">글목록</button>
     </td>
   </tr>
 </table>
