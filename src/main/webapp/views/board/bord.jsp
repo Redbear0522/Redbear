@@ -18,6 +18,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>게시판 목록</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/theme.css">
@@ -29,45 +30,51 @@
   <h2 class="text-center mb-4">게시판 목록</h2>
 
   <div class="text-end mb-3">
-    <button type="button" class="btn btn-primary btn-sm" onclick="location.href='write.jsp'">글쓰기</button>
+    <button type="button" class="btn btn-primary btn-sm" onclick="location.href='write.jsp'">
+      글쓰기
+    </button>
   </div>
 
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">번호</th>
-        <th scope="col">제목</th>
-        <th scope="col">작성자</th>
-        <th scope="col">작성일</th>
-        <th scope="col">조회수</th>
-      </tr>
-    </thead>
-    <tbody>
+  <!-- responsive wrapper 시작 -->
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">번호</th>
+          <th scope="col">제목</th>
+          <th scope="col">작성자</th>
+          <th scope="col">작성일</th>
+          <th scope="col" class="d-none d-sm-table-cell">조회수</th>
+        </tr>
+      </thead>
+      <tbody>
       <% if (list != null && !list.isEmpty()) {
            for (PostDTO dto : list) { %>
-      <tr>
-        <td><%= dto.getNum() %></td>
-        <td>
-          <% for (int i = 0; i < dto.getRe_level(); i++) { %>
-            <span class="ms-<%= i * 2 %>"></span>
-          <% } %>
-          <% if (dto.getRe_level() > 0) { %>
-            <span class="text-muted">RE:</span>
-          <% } %>
-          <a href="view.jsp?num=<%= dto.getNum() %>"><%= dto.getTitle() %></a>
-        </td>
-        <td><%= dto.getWriter() %></td>
-        <td><%= dto.getRegdate() %></td>
-        <td><%= dto.getReadcnt() %></td>
-      </tr>
+        <tr>
+          <td><%= dto.getNum() %></td>
+          <td>
+            <% for (int i = 0; i < dto.getRe_level(); i++) { %>
+              <span class="ms-<%= i * 2 %> ps-<%= i %>"></span>
+            <% } %>
+            <% if (dto.getRe_level() > 0) { %>
+              <span class="text-muted">RE:</span>
+            <% } %>
+            <a href="view.jsp?num=<%= dto.getNum() %>"><%= dto.getTitle() %></a>
+          </td>
+          <td><%= dto.getWriter() %></td>
+          <td><%= dto.getRegdate() %></td>
+          <td class="d-none d-sm-table-cell"><%= dto.getReadcnt() %></td>
+        </tr>
       <%   }
          } else { %>
-      <tr>
-        <td colspan="5" class="text-center">등록된 글이 없습니다.</td>
-      </tr>
+        <tr>
+          <td colspan="5" class="text-center">등록된 글이 없습니다.</td>
+        </tr>
       <% } %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
+  <!-- responsive wrapper 끝 -->
 
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
@@ -76,17 +83,23 @@
         <a class="page-link" href="board.jsp?pageNum=<%= currentPage - 1 %>">이전</a>
       </li>
       <% } else { %>
-      <li class="page-item disabled"><span class="page-link">이전</span></li>
+      <li class="page-item disabled">
+        <span class="page-link">이전</span>
+      </li>
       <% } %>
 
-      <li class="page-item active"><span class="page-link"><%= currentPage %></span></li>
+      <li class="page-item active">
+        <span class="page-link"><%= currentPage %></span>
+      </li>
 
       <% if (count > currentPage * pageSize) { %>
       <li class="page-item">
         <a class="page-link" href="board.jsp?pageNum=<%= currentPage + 1 %>">다음</a>
       </li>
       <% } else { %>
-      <li class="page-item disabled"><span class="page-link">다음</span></li>
+      <li class="page-item disabled">
+        <span class="page-link">다음</span>
+      </li>
       <% } %>
     </ul>
   </nav>

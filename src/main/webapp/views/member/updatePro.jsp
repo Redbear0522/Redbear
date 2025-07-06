@@ -11,11 +11,4 @@
 %>	<script >
 	alert("회원정보가 변경되었습니다.");
 	window.location="<%=request.getContextPath()%>/views/member/info.jsp";
-<<<<<<< HEAD
 	</script>
-=======
-	</script>
-
-	
-
->>>>>>> d7c54c289e5b8ccdde087ed54d1424c17e1b1fe6
