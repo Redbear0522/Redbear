@@ -16,6 +16,15 @@
 
 반갑습니다. 환영해요
 
+RedBear 웹페이지 입니다. 
+
+문의 : 
+
+dhtkdn
+
+
+
+
 
 <%@ include file="/resources/footer/footer.jsp"%>
 

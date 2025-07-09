@@ -99,16 +99,6 @@
                     </div>
                 </div>
             </div>
-            <!-- 로또 분석기 -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">로또 분석기</h5>
-                        <p class="card-text">로또 분석기 입니다.</p>
-                        <a href="<%=request.getContextPath()%>/views/lotto.jsp" class="btn btn-primary">이동하기</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>

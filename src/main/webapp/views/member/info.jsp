@@ -48,10 +48,10 @@
             <p><strong>인사말:</strong> <%= dto.getGreetings() %></p>
         </div>
         <div class="card-footer">
-            <a href="<%=request.getContextPath()%>/views/main.jsp" class="btn btn-secondary me-2">메인으로</a>
-            <a href="<%=request.getContextPath()%>/views/member/updateForm.jsp" class="btn btn-warning me-2">회원정보 변경</a>
-            <a href="<%=request.getContextPath()%>/views/member/pwChangeForm.jsp" class="btn btn-warning me-2">비밀번호 변경</a>
-            <a href="<%=request.getContextPath()%>/views/member/deleteForm.jsp" class="btn btn-danger">회원 탈퇴</a>
+            <a href="<%=request.getContextPath()%>/views/main.jsp" 					class="btn btn-secondary me-2">메인으로</a>
+            <a href="<%=request.getContextPath()%>/views/member/updateForm.jsp" 	class="btn btn-warning me-2">회원정보 변경</a>
+            <a href="<%=request.getContextPath()%>/views/member/pwChangeForm.jsp" 	class="btn btn-warning me-2">비밀번호 변경</a>
+            <a href="<%=request.getContextPath()%>/views/member/deleteForm.jsp" 	class="btn btn-danger">회원 탈퇴</a>
         </div>
     </div>
 <%
