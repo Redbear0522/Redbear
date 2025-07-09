@@ -56,62 +56,28 @@ public class WriteProServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        
-        // Cloudinary 객체가 초기화되지 않았다면, 에러를 발생시키고 메소드를 종료합니다.
-        if (this.cloudinary == null) {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cloudinary 서비스가 초기화되지 않았습니다. 서버 로그를 확인해주세요.");
-            return;
-        }
-
         req.setCharacterEncoding("UTF-8");
 
-        try {
-            // 1. 폼에서 전송된 파일(Part)을 가져옵니다.
-            Part filePart = req.getPart("upfile");
-            if (filePart == null || filePart.getSize() == 0) {
-                // 이 부분은 실제 서비스에서는 "파일을 선택해주세요" 같은 알림을 띄우고
-                // 이전 페이지로 돌려보내는 자바스크립트 로직을 추가하면 더 좋습니다.
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "업로드할 파일이 없습니다.");
-                return;
+        // 1. 게시글 정보 먼저 INSERT (GalleryDTO, GalleryDAO)
+        GalleryDTO dto = new GalleryDTO();
+        // ... dto에 setTitle, setContent 등 값 채우기
+        int newNum = GalleryDAO.getInstance().insertGallery(dto); // num 리턴받게 수정 필요
+
+        // 2. 여러 파일 받아서 각각 Cloudinary 업로드 후 gallery_image 테이블에 insert
+        Collection<Part> fileParts = req.getParts();
+        for (Part part : fileParts) {
+            if ("upfile".equals(part.getName()) && part.getSize() > 0) {
+                byte[] bytes = part.getInputStream().readAllBytes();
+                Map uploadResult = cloudinary.uploader().upload(bytes, ObjectUtils.emptyMap());
+                String imageUrl = (String) uploadResult.get("secure_url");
+
+                // 여기서 이미지 테이블에 insert
+                GalleryImageDAO.getInstance().insertImage(newNum, imageUrl);
             }
-
-            // 2. Cloudinary에 파일을 업로드합니다.
-            // uploader().upload() 메소드를 사용하며, 첫 번째 인자로 파일의 데이터(byte[]),
-            // 두 번째 인자로 추가 옵션(여기서는 없음)을 전달합니다.
-            Map uploadResult = cloudinary.uploader().upload(filePart.getInputStream().readAllBytes(), ObjectUtils.emptyMap());
-
-            // 3. 업로드 결과에서 이미지 URL을 추출합니다.
-            // Cloudinary는 업로드 성공 시, 다양한 정보를 Map 형태로 반환합니다.
-            // 그 중에서 'secure_url' 키 값에 저장된 URL이 우리가 필요한 주소입니다.
-            String imageUrl = (String) uploadResult.get("secure_url");
-            System.out.println("Cloudinary에 업로드된 URL: " + imageUrl);
-
-            // 4. 나머지 폼 데이터와 함께 DTO(Data Transfer Object)를 생성합니다.
-            GalleryDTO dto = new GalleryDTO();
-            HttpSession session = req.getSession(false);
-            
-            // ★★★★★ 가장 중요한 변경점 ★★★★★
-            // DB의 image 컬럼에는 파일명이 아닌, Cloudinary로부터 받은 전체 이미지 URL을 저장합니다.
-            dto.setImage(imageUrl);
-            
-            dto.setWriter((String) session.getAttribute("sname"));
-            dto.setTitle(req.getParameter("title"));
-            dto.setContent(req.getParameter("content"));
-            dto.setPw(req.getParameter("pw"));
-            dto.setIp(req.getRemoteAddr());
-
-            // 5. 데이터베이스에 DTO를 저장합니다.
-            GalleryDAO.getInstance().insertGallery(dto);
-
-            // 6. 모든 과정이 끝나면 갤러리 목록 페이지로 이동(리다이렉트)시킵니다.
-            resp.sendRedirect(req.getContextPath() + "/views/gallery/gallery.jsp");
-
-        } catch (Exception e) {
-            System.err.println("Cloudinary 파일 업로드 중 예외 발생!");
-            e.printStackTrace();
-            // 사용자에게 보여줄 에러 페이지로 이동시키는 것이 좋습니다.
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "파일 업로드 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
         }
+
+        resp.sendRedirect(req.getContextPath() + "/views/gallery/gallery.jsp");
     }
+}
 
 }

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import = "java.util.List" %> 
 <%@page import = "board.GalleryDAO" %>
 <%@page import = "board.GalleryDTO" %>
+<%@page import = "board.GalleryImageDAO"%>
 <%@page import = "java.text.SimpleDateFormat" %>
 <% request.setCharacterEncoding("UTF-8");%>
 <html>
@@ -54,7 +56,17 @@
 </tr>
  		<tr>
 		        <th scope="row">사진</th>
-		        <td colspan="3"><img src="<%= post.getImage() %>" class="img-thumbnail" style="width:600px;height:450px;object-fit:cover;"></td>
+		        <td colspan="3">
+		        <%
+				    List<String> imgList = GalleryImageDAO.getInstance().getImages(post.getNum());
+				    for (String url : imgList) {
+				%>
+				    <img src="<%=url%>" style="width:300px; height:200px;">
+				<%
+				    }
+				%>
+						        <img src="<%= post.getImage() %>" class="img-thumbnail" style="width:600px;height:450px;object-fit:cover;"></td>
+		        
 		</tr>
 
       <tr>

@@ -46,6 +46,7 @@
     <div class="mb-3">
       <label>사진</label>
       <input type="file" name="upfile" accept="image/*" class="form-control" required>
+      <input type="file" name="upfile" multiple required accept="image/*">
     </div>
     
     <div class="text-center">
