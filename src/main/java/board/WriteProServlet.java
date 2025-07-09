@@ -79,5 +79,3 @@ public class WriteProServlet extends HttpServlet {
         resp.sendRedirect(req.getContextPath() + "/views/gallery/gallery.jsp");
     }
 }
-
-}
