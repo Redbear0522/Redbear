@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import= "user.UserDTO , user.UserDAO" %>
 <html>
+<%
+	UserDTO user  = new UserDTO();
+%>
 <head>
   <meta charset="UTF-8">
   <title>사진 갤러리 글쓰기</title>
@@ -9,6 +13,7 @@
 <%@ include file="/resources/header/header.jsp" %>
 
 <%
+	
   if (session.getAttribute("sid") == null) {
 %>
   <script>
@@ -22,11 +27,8 @@
 
 <div class="container mt-5">
   <h2 class="mb-4">글쓰기</h2>
-  <form
-    action="<%=request.getContextPath()%>/gallery/writePro"
-    method="post"
-    enctype="multipart/form-data">
-    
+  <form    action="<%=request.getContextPath()%>/gallery/writePro"    method="post"    enctype="multipart/form-data">
+    <input type="hidden" name = "writer" value="<%=user.getId()%>">
     <!-- 제목 -->
     <div class="mb-3">
       <label>제목</label>
