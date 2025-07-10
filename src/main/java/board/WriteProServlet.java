@@ -61,9 +61,17 @@ public class WriteProServlet extends HttpServlet {
 
         // 1. 게시글 정보 먼저 INSERT (GalleryDTO, GalleryDAO)
         GalleryDTO dto = new GalleryDTO();
-        // ... dto에 setTitle, setContent 등 값 채우기
-        int newNum = GalleryDAO.getInstance().insertGallery(dto); // num 리턴받게 수정 필요
+        dto.setTitle(req.getParameter("title"));
+        dto.setWriter(req.getParameter("writer"));
+        dto.setContent(req.getParameter("content"));
+        dto.setPw(req.getParameter("pw"));
+        dto.setIp(req.getRemoteAddr()); // 등등
 
+        int newNum = GalleryDAO.getInstance().insertGallery(dto);
+        if (newNum <= 0) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "게시글 저장 실패");
+            return;
+        }
         // 2. 여러 파일 받아서 각각 Cloudinary 업로드 후 gallery_image 테이블에 insert
         Collection<Part> fileParts = req.getParts();
         for (Part part : fileParts) {

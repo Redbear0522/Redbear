@@ -41,13 +41,12 @@ public class GalleryDAO {
 
     /** 1. 글 등록 */
     public int insertGallery(GalleryDTO pd) {
-        int result = 0;
+        int newNum = -1;
         int num      = pd.getNum();
         int ref      = pd.getRef();
         int re_step  = pd.getRe_step();
         int re_level = pd.getRe_level();
         int number   = 0;
-
         try {
             conn = connect();
             // 최대 num 조회
@@ -70,13 +69,9 @@ public class GalleryDAO {
                 ref = number; re_step = 0; re_level = 0;
             }
 
-            // INSERT: regdate, readcnt는 테이블 기본값 사용, 컬럼에서 제거
-            String iSql =
-            	     "INSERT INTO Gallery(" +
-            	     " num,writer,title,content,pw,ip,ref,re_step,re_level,image" +    // image 칼럼 추가
-            	     ") VALUES (" +
-            	     " nextval('Gallery_sq'), ?,?,?,?,?,?,?,?,?" +                       // 물음표 하나 늘림
-            	     ")";
+            // ★ 여기부터 고치세요
+            String iSql = "INSERT INTO Gallery(writer,title,content,pw,ip,ref,re_step,re_level,image) " +
+                          "VALUES (?,?,?,?,?,?,?,?,?) RETURNING num";
             pstmt = conn.prepareStatement(iSql);
             pstmt.setString(1, pd.getWriter());
             pstmt.setString(2, pd.getTitle());
@@ -86,16 +81,19 @@ public class GalleryDAO {
             pstmt.setInt   (6, ref);
             pstmt.setInt   (7, re_step);
             pstmt.setInt   (8, re_level);
-            pstmt.setString(9, pd.getImage()); 
-            
-            result = pstmt.executeUpdate();
+            pstmt.setString(9, pd.getImage());
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                newNum = rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             disconnect();
         }
-        return result;
+        return newNum;
     }
+
 
     /** 2. 글 목록 (페이징) */
     public List<GalleryDTO> getGalleryList(int start, int end) {
