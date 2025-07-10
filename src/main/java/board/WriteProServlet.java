@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 
 // Cloudinary 라이브러리에서 필요한 클래스들을 import 합니다.
 import com.cloudinary.Cloudinary;
