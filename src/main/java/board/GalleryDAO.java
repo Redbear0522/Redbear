@@ -41,12 +41,14 @@ public class GalleryDAO {
 
     /** 1. 글 등록 */
     public int insertGallery(GalleryDTO pd) {
-        int newNum = -1;
+        int result = 0;
         int num      = pd.getNum();
         int ref      = pd.getRef();
         int re_step  = pd.getRe_step();
         int re_level = pd.getRe_level();
         int number   = 0;
+        int newNum   = -1;
+
         try {
             conn = connect();
             // 최대 num 조회
@@ -69,24 +71,26 @@ public class GalleryDAO {
                 ref = number; re_step = 0; re_level = 0;
             }
 
-            // ★ 여기부터 고치세요
+            // INSERT 및 RETURNING num 처리
             String iSql = "INSERT INTO Gallery(writer,title,content,pw,ip,ref,re_step,re_level,image) " +
-                    "VALUES (?,?,?,?,?,?,?,?,?) RETURNING num";
-			      pstmt = conn.prepareStatement(iSql);
-			      pstmt.setString(1, pd.getWriter());
-			      pstmt.setString(2, pd.getTitle());
-			      pstmt.setString(3, pd.getContent());
-			      pstmt.setString(4, pd.getPw());
-			      pstmt.setString(5, pd.getIp());
-			      pstmt.setInt   (6, ref);
-			      pstmt.setInt   (7, re_step);
-			      pstmt.setInt   (8, re_level);
-			      pstmt.setString(9, pd.getImage());
-			
-			      rs = pstmt.executeQuery();
-			      if (rs.next()) {
-			          newNum = rs.getInt(1); // ★ 진짜 PK!
-			      }
+                          "VALUES (?,?,?,?,?,?,?,?,?) RETURNING num";
+            pstmt = conn.prepareStatement(iSql);
+            pstmt.setString(1, pd.getWriter());
+            pstmt.setString(2, pd.getTitle());
+            pstmt.setString(3, pd.getContent());
+            pstmt.setString(4, pd.getPw());
+            pstmt.setString(5, pd.getIp());
+            pstmt.setInt   (6, ref);
+            pstmt.setInt   (7, re_step);
+            pstmt.setInt   (8, re_level);
+            pstmt.setString(9, pd.getImage());
+
+            rs = pstmt.executeQuery(); // ★ executeQuery()로 받아야 함
+            if (rs.next()) {
+                newNum = rs.getInt(1); // 새로 insert된 PK값(num) 가져옴
+            }
+            rs.close();
+            pstmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -94,6 +98,7 @@ public class GalleryDAO {
         }
         return newNum;
     }
+
 
 
     /** 2. 글 목록 (페이징) */
