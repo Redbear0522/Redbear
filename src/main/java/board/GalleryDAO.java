@@ -71,21 +71,22 @@ public class GalleryDAO {
 
             // ★ 여기부터 고치세요
             String iSql = "INSERT INTO Gallery(writer,title,content,pw,ip,ref,re_step,re_level,image) " +
-                          "VALUES (?,?,?,?,?,?,?,?,?) RETURNING num";
-            pstmt = conn.prepareStatement(iSql);
-            pstmt.setString(1, pd.getWriter());
-            pstmt.setString(2, pd.getTitle());
-            pstmt.setString(3, pd.getContent());
-            pstmt.setString(4, pd.getPw());
-            pstmt.setString(5, pd.getIp());
-            pstmt.setInt   (6, ref);
-            pstmt.setInt   (7, re_step);
-            pstmt.setInt   (8, re_level);
-            pstmt.setString(9, pd.getImage());
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
-                newNum = rs.getInt(1);
-            }
+                    "VALUES (?,?,?,?,?,?,?,?,?) RETURNING num";
+			      pstmt = conn.prepareStatement(iSql);
+			      pstmt.setString(1, pd.getWriter());
+			      pstmt.setString(2, pd.getTitle());
+			      pstmt.setString(3, pd.getContent());
+			      pstmt.setString(4, pd.getPw());
+			      pstmt.setString(5, pd.getIp());
+			      pstmt.setInt   (6, ref);
+			      pstmt.setInt   (7, re_step);
+			      pstmt.setInt   (8, re_level);
+			      pstmt.setString(9, pd.getImage());
+			
+			      rs = pstmt.executeQuery();
+			      if (rs.next()) {
+			          newNum = rs.getInt(1); // ★ 진짜 PK!
+			      }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
