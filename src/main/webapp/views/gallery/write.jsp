@@ -27,8 +27,8 @@
 
 <div class="container mt-5">
   <h2 class="mb-4">글쓰기</h2>
-  <form    action="<%=request.getContextPath()%>/gallery/writePro"    method="post"    enctype="multipart/form-data">
-    <input type="hidden" name = "writer" value="<%=user.getId()%>">
+  <form action="<%=request.getContextPath()%>/gallery/writePro" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="writer" value="<%=session.getAttribute("sid")%>">
     <!-- 제목 -->
     <div class="mb-3">
       <label>제목</label>
@@ -47,9 +47,8 @@
     <!-- 사진 업로드 -->
     <div class="mb-3">
       <label>사진</label>
-      <input type="file" name="upfile" accept="image/*" class="form-control" required>
-      <input type="file" name="upfile" multiple required accept="image/*">
-    </div>
+      <td><input type="file" name="upfile" multiple></td>
+      </div>
     
     <div class="text-center">
       <button type="submit" class="btn btn-primary">등록</button>
