@@ -3,6 +3,9 @@
 <html>
 <%
 	UserDTO user  = new UserDTO();
+	if (session.getAttribute("sid") == null) {%>
+    <script type="text/javascript">alert("로그인 후 이용해주세요."); history.back(); return;</script>
+<%}
 %>
 <head>
   <meta charset="UTF-8">

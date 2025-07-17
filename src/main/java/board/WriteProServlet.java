@@ -21,6 +21,8 @@ import com.cloudinary.utils.ObjectUtils;
 @MultipartConfig // 파일 업로드를 처리하는 서블릿이므로 어노테이션은 그대로 유지합니다.
 public class WriteProServlet extends HttpServlet {
 
+	
+	
     // Cloudinary 객체를 저장할 멤버 변수를 선언합니다.
     // 한번만 생성해서 계속 재사용하기 위함입니다.
     private Cloudinary cloudinary;
@@ -58,7 +60,17 @@ public class WriteProServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-
+        
+        System.out.println("writer=" + dto.getWriter());
+        System.out.println("title=" + dto.getTitle());
+        System.out.println("pw=" + dto.getPw());
+        // null 또는 빈 값이면 insert 안되게 조건 추가!
+        if(dto.getWriter() == null || dto.getWriter().trim().isEmpty()) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "작성자 정보 누락");
+            return;
+        }
+        
+        
         // 1. 게시글 정보 먼저 INSERT (GalleryDTO, GalleryDAO)
         GalleryDTO dto = new GalleryDTO();
         dto.setTitle(req.getParameter("title"));
