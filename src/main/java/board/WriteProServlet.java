@@ -34,22 +34,18 @@ public class WriteProServlet extends HttpServlet {
      */
     @Override
     public void init() throws ServletException {
-        // Render 대시보드에 설정한 환경 변수 'CLOUDINARY_URL' 값을 가져옵니다.
         String cloudinaryUrl = System.getenv("CLOUDINARY_URL");
-        
-        // 환경 변수가 설정되지 않았을 경우, 심각한 오류이므로 서버 로그에 메시지를 남깁니다.
+
         if (cloudinaryUrl == null || cloudinaryUrl.isEmpty()) {
             System.err.println("************************************************************");
             System.err.println("FATAL ERROR: CLOUDINARY_URL 환경 변수가 설정되지 않았습니다!");
             System.err.println("Render 대시보드에서 환경 변수를 설정해주세요.");
             System.err.println("************************************************************");
-            return; // 서블릿 초기화를 중단합니다.
+            // **수정**: 초기화 실패 시 ServletException을 던져야 함
+            throw new ServletException("CLOUDINARY_URL 환경 변수가 설정되지 않았습니다.");
         }
-        
-        // 가져온 URL 정보로 Cloudinary 객체를 생성합니다.
         this.cloudinary = new Cloudinary(cloudinaryUrl);
-        // 항상 https:// 로 시작하는 보안 URL을 사용하도록 설정합니다.
-        this.cloudinary.config.secure = true; 
+        this.cloudinary.config.secure = true;
         System.out.println("Cloudinary 클라이언트가 성공적으로 초기화되었습니다.");
     }
 
@@ -60,18 +56,8 @@ public class WriteProServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        
-        System.out.println("writer=" + dto.getWriter());
-        System.out.println("title=" + dto.getTitle());
-        System.out.println("pw=" + dto.getPw());
-        // null 또는 빈 값이면 insert 안되게 조건 추가!
-        if(dto.getWriter() == null || dto.getWriter().trim().isEmpty()) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "작성자 정보 누락");
-            return;
-        }
-        
-        
-        // 1. 게시글 정보 먼저 INSERT (GalleryDTO, GalleryDAO)
+
+        // dto 선언 및 값 할당 먼저!
         GalleryDTO dto = new GalleryDTO();
         dto.setTitle(req.getParameter("title"));
         dto.setWriter(req.getParameter("writer"));
@@ -79,24 +65,34 @@ public class WriteProServlet extends HttpServlet {
         dto.setPw(req.getParameter("pw"));
         dto.setIp(req.getRemoteAddr()); // 등등
 
+        // dto 값 확인 출력
+        System.out.println("writer=" + dto.getWriter());
+        System.out.println("title=" + dto.getTitle());
+        System.out.println("pw=" + dto.getPw());
+
+        // null 체크
+        if(dto.getWriter() == null || dto.getWriter().trim().isEmpty()) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "작성자 정보 누락");
+            return;
+        }
+
+        // 게시글 INSERT
         int newNum = GalleryDAO.getInstance().insertGallery(dto);
         if (newNum <= 0) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "게시글 저장 실패");
             return;
         }
-        // 2. 여러 파일 받아서 각각 Cloudinary 업로드 후 gallery_image 테이블에 insert
+
+        // 파일 업로드 및 DB 저장
         Collection<Part> fileParts = req.getParts();
         for (Part part : fileParts) {
             if ("upfile".equals(part.getName()) && part.getSize() > 0) {
                 byte[] bytes = part.getInputStream().readAllBytes();
                 Map uploadResult = cloudinary.uploader().upload(bytes, ObjectUtils.emptyMap());
                 String imageUrl = (String) uploadResult.get("secure_url");
-
-                // 여기서 이미지 테이블에 insert
                 GalleryImageDAO.getInstance().insertImage(newNum, imageUrl);
             }
         }
 
         resp.sendRedirect(req.getContextPath() + "/views/gallery/gallery.jsp");
     }
-}

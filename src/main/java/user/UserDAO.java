@@ -130,24 +130,22 @@ public class UserDAO {
 	}
 	public String findId(UserDTO dto) {
 	    String result = null;
-	    try {
-	        conn = getConnection();
-	        String sql = "SELECT id FROM homepage WHERE name=? AND phone2=? AND birth=?";
-	        pstmt = conn.prepareStatement(sql);
+	    String sql = "SELECT id FROM homepage WHERE name=? AND phone2=? AND birth=?";
+	    try (Connection conn = getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	        pstmt.setString(1, dto.getName());
 	        pstmt.setString(2, dto.getPhone2());
 	        pstmt.setString(3, dto.getBirth());
 
-	        rs = pstmt.executeQuery();
-	        if (rs.next()) {
-	            result = rs.getString("id"); // ← 여기서 ID를 꺼냄
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                result = rs.getString("id"); // **수정: ID 값을 할당**
+	            }
 	        }
-	    } catch (Exception e) {
+	    } catch (SQLException e) {
 	        e.printStackTrace();
-	    } finally {
-	        disconnect();
 	    }
-	    return result; // 찾은 ID 또는 null
+	    return result;
 	}
 	public String findPw(UserDTO dto) {
 	    String result = null;
