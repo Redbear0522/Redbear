@@ -26,30 +26,51 @@
         return; // 더 이상 진행하지 않도록 처리
     }
 %>
-    <h2>게시글 작성</h2>
-    <form action="writePro.jsp" method="post" accept-charset="UTF-8">
-        <table border="1" cellpadding="10">
-            <tr>
-                <td>작성자</td>
-                   <input type="text" name="writer" value="<%= session.getAttribute("sname") != null ? session.getAttribute("sname") : "" %>" readonly>
-            </tr>
-            <tr>
-                <td>제목</td>
-                <td><input type="text" name="title" required></td>
-            </tr>
-            <tr>
-                <td>내용</td>
-                <td><textarea name="content" rows="10" cols="50" required></textarea></td>
-            </tr>
-            <tr>
-                <td>비밀번호</td>
-                <td><input type="password" name="pw" required></td>
-            </tr>
-        </table>
-        <br>
-        <input type="submit" value="등록">
-        <input type="button" value="목록" onclick="location.href='list.jsp'">
-    </form>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">게시글 작성</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form action="writePro.jsp" method="post" accept-charset="UTF-8">
+                            <div class="mb-3">
+                                <label for="writer" class="form-label">작성자</label>
+                                <input type="text" class="form-control" id="writer" name="writer" 
+                                    value="<%= session.getAttribute("sname") != null ? session.getAttribute("sname") : "" %>" readonly>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="title" class="form-label">제목</label>
+                                <input type="text" class="form-control" id="title" name="title" required
+                                    placeholder="제목을 입력하세요">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="content" class="form-label">내용</label>
+                                <textarea class="form-control" id="content" name="content" rows="10" required
+                                    placeholder="내용을 입력하세요" style="resize: vertical;"></textarea>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="pw" class="form-label">비밀번호</label>
+                                <input type="password" class="form-control" id="pw" name="pw" required
+                                    placeholder="비밀번호를 입력하세요">
+                            </div>
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-secondary me-md-2" onclick="location.href='bord.jsp'">
+                                    목록
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    등록
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <%@ include file="/resources/footer/footer.jsp"%>
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
