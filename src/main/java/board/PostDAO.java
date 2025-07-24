@@ -162,7 +162,7 @@ public class PostDAO {
     }
 
     /** 4. 조회수 증가 */
-    public void increaseReadcnt(int num) {
+    public void setReadCountUpdate(int num) {
         String sql = "UPDATE public.post SET readcnt = COALESCE(readcnt, 0) + 1 WHERE num = ?";
         try {
             conn = connect();

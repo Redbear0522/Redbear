@@ -11,6 +11,11 @@
 
     // DAO 인스턴스 얻어서 게시글 조회
     PostDAO dao = PostDAO.getInstance();
+    
+    // 1. 조회수 증가
+    dao.setReadCountUpdate(num);
+    
+    // 2. 증가된 조회수를 포함한 게시물 정보를 가져옵니다.
     PostDTO post = dao.getPost(num);
 %>
 <!DOCTYPE html>

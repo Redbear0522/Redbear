@@ -37,7 +37,7 @@
     GalleryDAO pdPro = GalleryDAO.getInstance();
     
     // 1. 먼저 조회수를 증가시킵니다.
-    pdPro.updateReadCount(num);
+    pdPro.setReadCountUpdate(num);
     
     // 2. 증가된 조회수를 포함한 게시물 정보를 가져옵니다.
     GalleryDTO post = pdPro.getGallery(num);

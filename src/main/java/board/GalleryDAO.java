@@ -40,7 +40,7 @@ public class GalleryDAO {
     }
 
     /** 조회수 증가 */
-    public void updateReadCount(int num) {
+    public void setReadCountUpdate(int num) {
         String sql = "UPDATE public.gallery SET readcnt = COALESCE(readcnt, 0) + 1 WHERE num = ?";
         try {
             conn = connect();
