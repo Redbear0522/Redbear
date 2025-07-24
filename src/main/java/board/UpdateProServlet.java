@@ -42,18 +42,57 @@ public class UpdateProServlet extends HttpServlet {
 
         // 새로운 파일이 업로드되었는지 확인합니다.
         if (filePart != null && filePart.getSize() > 0) {
-            // 파일을 Cloudinary에 업로드하고 이미지 URL을 받아옵니다.
-            byte[] bytes = filePart.getInputStream().readAllBytes();
-            Map<?,?> uploadResult = cloudinary.uploader().upload(bytes, ObjectUtils.emptyMap());
-            imageUrl = (String) uploadResult.get("secure_url");
+            try {
+                // 파일 크기 제한 체크 (예: 10MB)
+                if (filePart.getSize() > 10 * 1024 * 1024) {
+                    throw new ServletException("파일 크기가 10MB를 초과할 수 없습니다.");
+                }
+                
+                // 파일 타입 체크
+                String contentType = filePart.getContentType();
+                if (!contentType.startsWith("image/")) {
+                    throw new ServletException("이미지 파일만 업로드할 수 있습니다.");
+                }
+
+                // 파일을 Cloudinary에 업로드하고 이미지 URL을 받아옵니다.
+                byte[] bytes = filePart.getInputStream().readAllBytes();
+                Map<?,?> uploadResult = cloudinary.uploader().upload(bytes, ObjectUtils.emptyMap());
+                imageUrl = (String) uploadResult.get("secure_url");
+            } catch (IOException e) {
+                throw new ServletException("파일 업로드 중 오류가 발생했습니다.", e);
+            } catch (RuntimeException e) {
+                throw new ServletException("Cloudinary 업로드 중 오류가 발생했습니다.", e);
+            }
         }
 
-        // 폼 데이터를 DTO 객체에 저장합니다.
+        // 폼 데이터를 검증하고 DTO 객체에 저장합니다.
+        String numStr = req.getParameter("num");
+        String title = req.getParameter("title");
+        String content = req.getParameter("content");
+        String password = req.getParameter("pw");
+
+        // 필수 입력값 검증
+        if (numStr == null || title == null || content == null || password == null) {
+            throw new ServletException("필수 입력값이 누락되었습니다.");
+        }
+
+        // 제목과 내용의 길이 검증
+        if (title.length() < 1 || title.length() > 100) {
+            throw new ServletException("제목은 1자 이상 100자 이하여야 합니다.");
+        }
+        if (content.length() < 1 || content.length() > 2000) {
+            throw new ServletException("내용은 1자 이상 2000자 이하여야 합니다.");
+        }
+
         GalleryDTO dto = new GalleryDTO();
-        dto.setNum(Integer.parseInt(req.getParameter("num")));
-        dto.setTitle(req.getParameter("title"));
-        dto.setContent(req.getParameter("content"));
-        dto.setPw(req.getParameter("pw"));
+        try {
+            dto.setNum(Integer.parseInt(numStr));
+        } catch (NumberFormatException e) {
+            throw new ServletException("잘못된 글 번호입니다.");
+        }
+        dto.setTitle(title);
+        dto.setContent(content);
+        dto.setPw(password);
         
         // 새로운 이미지 URL이 있다면 DTO에 설정합니다. (없다면 기존 이미지는 그대로 유지됩니다)
         if (imageUrl != null) {
@@ -68,10 +107,13 @@ public class UpdateProServlet extends HttpServlet {
             String pageNum = req.getParameter("pageNum");
             resp.sendRedirect(req.getContextPath() + "/gallery/list?pageNum=" + pageNum);
         } else {
-            // 업데이트 실패 시 (비밀번호 오류 등), 알림창을 띄우고 이전 페이지로 돌아갑니다.
+            // 업데이트 실패 시 상세한 에러 메시지와 함께 이전 페이지로 돌아갑니다.
             resp.setContentType("text/html; charset=UTF-8");
             resp.getWriter().println("<script>");
-            resp.getWriter().println("alert('비밀번호가 틀렸거나 수정에 실패했습니다.');");
+            resp.getWriter().println("alert('수정에 실패했습니다.\\n" +
+                                   "- 비밀번호를 확인해주세요.\\n" +
+                                   "- 존재하지 않는 게시물일 수 있습니다.\\n" +
+                                   "- 일시적인 오류일 수 있으니 잠시 후 다시 시도해주세요.');");
             resp.getWriter().println("history.back();");
             resp.getWriter().println("</script>");
         }
