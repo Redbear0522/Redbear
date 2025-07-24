@@ -83,7 +83,8 @@
 <body>
 <%@ include file="/resources/header/header.jsp"%>
 <%
-    // 로그인 여부 체크
+    String sid = (String) session.getAttribute("sid");
+    String name = (String) session.getAttribute("sname");
     boolean isLoggedIn = (sid != null);
 %>
 
@@ -189,6 +190,8 @@
         </div>
     </div>
 </section>
+
+<% } %>
 
 <%@ include file="/resources/footer/footer.jsp"%>
 
