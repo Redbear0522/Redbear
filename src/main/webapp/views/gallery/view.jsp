@@ -35,15 +35,17 @@
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     GalleryDAO pdPro = GalleryDAO.getInstance();
+    
+    // 1. 먼저 조회수를 증가시킵니다.
+    pdPro.updateReadCount(num);
+    
+    // 2. 증가된 조회수를 포함한 게시물 정보를 가져옵니다.
     GalleryDTO post = pdPro.getGallery(num);
     
     if (post == null) {
         response.sendRedirect(request.getContextPath() + "/views/gallery/gallery.jsp");
         return;
     }
-    
-    // 조회수 증가
-    pdPro.updateReadCount(num);
 
 	int ref=post.getRef();
 	int re_step=post.getRe_step();

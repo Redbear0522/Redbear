@@ -39,7 +39,20 @@ public class GalleryDAO {
         try { if (conn  != null) conn.close();  } catch (SQLException ignored) {}
     }
 
-    
+    /** 조회수 증가 */
+    public void updateReadCount(int num) {
+        String sql = "UPDATE gallery SET readcnt = COALESCE(readcnt, 0) + 1 WHERE num = ?";
+        try {
+            conn = connect();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, num);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
 
     /** 1. 글 등록 */
     public int insertGallery(GalleryDTO pd) {
@@ -171,7 +184,7 @@ public void updateReadCount(int num) {
     try {
         conn = connect();
         pstmt = conn.prepareStatement(
-            "UPDATE gallery SET readcount = readcount + 1 WHERE num = ?"
+            "UPDATE Gallery SET readcnt = readcnt + 1 WHERE num = ?"
         );
         pstmt.setInt(1, num);
         pstmt.executeUpdate();
