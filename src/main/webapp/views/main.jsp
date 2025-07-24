@@ -7,7 +7,7 @@
     <title>메인 페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <link rel="stylesheet" href="/redbear_resources/theme.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/theme.css">
     <style>
         .hero-section {
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
@@ -81,7 +81,7 @@
     </style>
 </head>
 <body>
-<%@ include file="/resources/header/header.jsp"%>
+<%@ include file="../resources/header/header.jsp"%>
 <%
     String sid = (String) session.getAttribute("sid");
     String name = (String) session.getAttribute("sname");
@@ -193,7 +193,7 @@
 
 <% } %>
 
-<%@ include file="/resources/footer/footer.jsp"%>
+<%@ include file="../resources/footer/footer.jsp"%>
 
 <!-- JS Script -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
