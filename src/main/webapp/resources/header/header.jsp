@@ -22,9 +22,6 @@
 
         <div class="collapse navbar-collapse" id="navBar">
             <ul class="navbar-nav ms-auto">
-
-               
-
                 <% if (sid == null) { %>
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/views/member/register.jsp">회원가입</a></li>
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/views/member/login.jsp">로그인</a></li>
@@ -39,13 +36,9 @@
                         <a class="nav-link" href="${pageContext.request.contextPath}/views/member/info.jsp">회원정보</a>
                     </li>
                 <% } %>
-
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/views/board/bord.jsp">게시판</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/views/gallery/gallery.jsp">갤러리</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="https://open.kakao.com/o/g8CG2Ayh" target="_blank" rel="noopener noreferrer">문의</a>
                 </li>
-
             </ul>
         </div>
     </div>

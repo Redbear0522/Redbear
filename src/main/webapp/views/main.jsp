@@ -107,7 +107,7 @@
         <h2 class="text-center mb-5">사이트 주요 기능</h2>
         <div class="row g-4 justify-content-center">
             <!-- 게시판 -->
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="card shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">게시판</h5>
@@ -117,17 +117,17 @@
                 </div>
             </div>
             <!-- 사진 갤러리 -->
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="card shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">사진 갤러리</h5>
                         <p class="card-text flex-grow-1">소중한 추억을 공유해요.</p>
-                        <a href="<%=request.getContextPath()%>/views/gallery/gallery.jsp" class="btn btn-primary">이동</a>
+                        <a href="<%=request.getContextPath()%>/views/gallery/gallery.jsp" class="btn btn-primary mt-auto">이동</a>
                     </div>
                 </div>
             </div>
             <!-- 회원가입 -->
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
                 <div class="card shadow-sm h-100">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">회원가입</h5>
@@ -147,7 +147,7 @@
         <h2 class="text-center mb-5">사이트 안내</h2>
         <div class="row g-4 justify-content-center">
             <!-- 게시판 -->
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
                         <h5 class="card-title">게시판</h5>
@@ -157,7 +157,7 @@
                 </div>
             </div>
             <!-- 사진 갤러리 -->
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
                         <h5 class="card-title">사진 갤러리</h5>
@@ -167,7 +167,7 @@
                 </div>
             </div>
             <!-- 회원정보 -->
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
                         <h5 class="card-title">회원정보</h5>
@@ -177,19 +177,18 @@
                 </div>
             </div>
             <!-- 로또 분석기 -->
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
                         <h5 class="card-title">로또 분석기</h5>
                         <p class="card-text">로또 분석기 입니다.</p>
-                        <a href="<%=request.getContextPath()%>/views/lotto.jsp" class="btn btn-primary">이동하기</a>
+                        <a href="<%=request.getContextPath()%>/views/lotto.jsp" class="btn btn-primary">이동</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<% } %>
 
 <%@ include file="/resources/footer/footer.jsp"%>
 
@@ -202,11 +201,6 @@
         duration: 1000,
         once: true,
         offset: 100
-    });
-    // 카드에 애니메이션 효과 추가
-    document.querySelectorAll('.card').forEach((card, index) => {
-        card.setAttribute('data-aos', 'fade-up');
-        card.setAttribute('data-aos-delay', (index * 100).toString());
     });
 </script>
 

@@ -113,22 +113,7 @@
             <% } %>
         </ul>
     </nav>
-  </table>
-  <nav>
-    <ul class="pagination justify-content-center">
-      <% if (currentPage > 1) { %>
-      <li class="page-item"><a class="page-link" href="gallery.jsp?pageNum=<%=currentPage-1%>">이전</a></li>
-      <% } else { %>
-      <li class="page-item disabled"><span class="page-link">이전</span></li>
-      <% } %>
-      <li class="page-item active"><span class="page-link"><%=currentPage%></span></li>
-      <% if (count > currentPage * pageSize) { %>
-      <li class="page-item"><a class="page-link" href="gallery.jsp?pageNum=<%=currentPage+1%>">다음</a></li>
-      <% } else { %>
-      <li class="page-item disabled"><span class="page-link">다음</span></li>
-      <% } %>
-    </ul>
-  </nav>
+</div>
 </div>
 <%@ include file="/resources/footer/footer.jsp" %>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
