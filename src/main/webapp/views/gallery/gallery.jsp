@@ -83,21 +83,36 @@
             <p class="text-muted">등록된 게시물이 없습니다.</p>
         </div>
     <% } %>
-        <img src="<%= g.getImage() %>" class="img-thumbnail" style="width:120px;height:90px;object-fit:cover;">
-      </a>
-    </td>
-    <td><a href="view.jsp?num=<%= g.getNum() %>"><%= g.getTitle() %></a></td>
-    <td><%= g.getWriter() %></td>
-    <td><%= g.getRegdate() %></td>
-    <td><%= g.getReadcnt() %></td>
-  </tr>
-<%   }
-     } else { %>
-  <tr>
-    <td colspan="6" class="text-center">등록된 글이 없습니다.</td>
-  </tr>
-<% } %>
-    </tbody>
+    </div>
+    
+    <!-- 페이지네이션 -->
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            <% if (currentPage > 1) { %>
+            <li class="page-item">
+                <a class="page-link" href="gallery.jsp?pageNum=<%=currentPage-1%>">이전</a>
+            </li>
+            <% } else { %>
+            <li class="page-item disabled">
+                <span class="page-link">이전</span>
+            </li>
+            <% } %>
+            
+            <li class="page-item active">
+                <span class="page-link"><%=currentPage%></span>
+            </li>
+            
+            <% if (count > currentPage * pageSize) { %>
+            <li class="page-item">
+                <a class="page-link" href="gallery.jsp?pageNum=<%=currentPage+1%>">다음</a>
+            </li>
+            <% } else { %>
+            <li class="page-item disabled">
+                <span class="page-link">다음</span>
+            </li>
+            <% } %>
+        </ul>
+    </nav>
   </table>
   <nav>
     <ul class="pagination justify-content-center">
