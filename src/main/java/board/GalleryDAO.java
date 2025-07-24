@@ -44,9 +44,14 @@ public class GalleryDAO {
         String sql = "UPDATE public.gallery SET readcnt = COALESCE(readcnt, 0) + 1 WHERE num = ?";
         try {
             conn = connect();
+            if (conn == null) {
+                System.out.println("데이터베이스 연결 실패");
+                return;
+            }
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, num);
-            pstmt.executeUpdate();
+            int result = pstmt.executeUpdate();
+            System.out.println("조회수 업데이트 결과: " + result + " 행이 수정됨");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
