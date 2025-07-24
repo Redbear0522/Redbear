@@ -51,7 +51,7 @@ public class PostDAO {
         try {
             conn = connect();
             // 최대 num 조회
-            String maxSql = "SELECT COALESCE(MAX(num),0) FROM post";
+            String maxSql = "SELECT COALESCE(MAX(num),0) FROM public.post";
             pstmt = conn.prepareStatement(maxSql);
             rs = pstmt.executeQuery();
             if (rs.next()) number = rs.getInt(1) + 1;
@@ -59,7 +59,7 @@ public class PostDAO {
 
             // 답글 처리
             if (num != 0) {
-                String uSql = "UPDATE post SET re_step = re_step + 1 WHERE ref = ? AND re_step > ?";
+                String uSql = "UPDATE public.post SET re_step = re_step + 1 WHERE ref = ? AND re_step > ?";
                 pstmt = conn.prepareStatement(uSql);
                 pstmt.setInt(1, ref);
                 pstmt.setInt(2, re_step);
@@ -72,7 +72,7 @@ public class PostDAO {
 
             // INSERT: regdate, readcnt는 테이블 기본값 사용, 컬럼에서 제거
             String iSql =
-                "INSERT INTO post(" +
+                "INSERT INTO public.post(" +
                 " num,writer,title,content,pw,ip,ref,re_step,re_level" +
                 ") VALUES (" +
                 " nextval('post_sq'), ?,?,?,?,?,?,?,?" +
@@ -103,7 +103,7 @@ public class PostDAO {
         int offset = start - 1;
         String sql =
             "SELECT num,writer,title,pw,regdate,ref,re_step,re_level,content,ip,readcnt " +
-            "FROM post " +
+            "FROM public.post " +
             "ORDER BY ref DESC,re_step ASC " +
             "LIMIT ? OFFSET ?";
         try {
@@ -138,7 +138,7 @@ public class PostDAO {
     /** 3. 글 보기 */
     public PostDTO getPost(int num) {
         PostDTO dto = null;
-        String sql = "SELECT * FROM post WHERE num = ?";
+        String sql = "SELECT * FROM public.post WHERE num = ?";
         try {
             conn = connect();
             pstmt = conn.prepareStatement(sql);
@@ -163,7 +163,7 @@ public class PostDAO {
 
     /** 4. 조회수 증가 */
     public void increaseReadcnt(int num) {
-        String sql = "UPDATE post SET readcnt = readcnt + 1 WHERE num = ?";
+        String sql = "UPDATE public.post SET readcnt = COALESCE(readcnt, 0) + 1 WHERE num = ?";
         try {
             conn = connect();
             pstmt = conn.prepareStatement(sql);
@@ -179,7 +179,7 @@ public class PostDAO {
     /** 5. 글 수정 */
     public int updatePost(PostDTO dto) {
         int res = 0;
-        String sql = "UPDATE post SET title = ?, content = ? WHERE num = ? AND pw = ?";
+        String sql = "UPDATE public.post SET title = ?, content = ? WHERE num = ? AND pw = ?";
         try {
             conn = connect();
             pstmt = conn.prepareStatement(sql);
@@ -199,7 +199,7 @@ public class PostDAO {
     /** 6. 글 삭제 */
     public int deletePost(int num, String pw) {
         int res = 0;
-        String sql = "DELETE FROM post WHERE num = ? AND pw = ?";
+        String sql = "DELETE FROM public.post WHERE num = ? AND pw = ?";
         try {
             conn = connect();
             pstmt = conn.prepareStatement(sql);
@@ -217,7 +217,7 @@ public class PostDAO {
     /** 7. 전체 글 개수 */
     public int getArticleCount() {
         int count = 0;
-        String sql = "SELECT COUNT(*) FROM post";
+        String sql = "SELECT COUNT(*) FROM public.post";
         try {
             conn = connect();
             pstmt = conn.prepareStatement(sql);

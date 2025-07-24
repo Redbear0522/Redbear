@@ -41,7 +41,7 @@ public class GalleryDAO {
 
     /** 조회수 증가 */
     public void updateReadCount(int num) {
-        String sql = "UPDATE gallery SET readcnt = COALESCE(readcnt, 0) + 1 WHERE num = ?";
+        String sql = "UPDATE public.gallery SET readcnt = COALESCE(readcnt, 0) + 1 WHERE num = ?";
         try {
             conn = connect();
             pstmt = conn.prepareStatement(sql);
@@ -66,7 +66,7 @@ public class GalleryDAO {
         try {
             conn = connect();
             // 최대 num 조회
-            String maxSql = "SELECT COALESCE(MAX(num),0) FROM Gallery";
+            String maxSql = "SELECT COALESCE(MAX(num),0) FROM public.gallery";
             pstmt = conn.prepareStatement(maxSql);
             rs = pstmt.executeQuery();
             if (rs.next()) number = rs.getInt(1) + 1;
@@ -74,7 +74,7 @@ public class GalleryDAO {
 
             // 답글 처리
             if (num != 0) {
-                String uSql = "UPDATE Gallery SET re_step = re_step + 1 WHERE ref = ? AND re_step > ?";
+                String uSql = "UPDATE public.gallery SET re_step = re_step + 1 WHERE ref = ? AND re_step > ?";
                 pstmt = conn.prepareStatement(uSql);
                 pstmt.setInt(1, ref);
                 pstmt.setInt(2, re_step);
@@ -87,10 +87,10 @@ public class GalleryDAO {
 
             // INSERT: regdate, readcnt는 테이블 기본값 사용, 컬럼에서 제거
             String iSql =
-            	     "INSERT INTO Gallery(" +
-            	     " num,writer,title,content,pw,ip,ref,re_step,re_level,image" +    // image 칼럼 추가
+            	     "INSERT INTO public.gallery(" +
+            	     " num,writer,title,content,pw,ip,ref,re_step,re_level,image" +
             	     ") VALUES (" +
-            	     " nextval('Gallery_sq'), ?,?,?,?,?,?,?,?,?" +                       // 물음표 하나 늘림
+            	     " nextval('gallery_sq'), ?,?,?,?,?,?,?,?,?" +
             	     ")";
             pstmt = conn.prepareStatement(iSql);
             pstmt.setString(1, pd.getWriter());
@@ -119,7 +119,7 @@ public class GalleryDAO {
         int offset = start - 1;
         String sql =
         		"SELECT num,writer,title,pw,regdate,ref,re_step,re_level,content,ip,readcnt,image " +
-        		"FROM Gallery " +
+        		"FROM public.gallery " +
             "ORDER BY ref DESC,re_step ASC " +
             "LIMIT ? OFFSET ?";
         try {
@@ -155,7 +155,7 @@ public class GalleryDAO {
     /** 3. 글 보기 */
     public GalleryDTO getGallery(int num) {
         GalleryDTO dto = null;
-        String sql = "SELECT *, image FROM Gallery WHERE num = ?";
+        String sql = "SELECT * FROM public.gallery WHERE num = ?";
         try {
             conn = connect();
             pstmt = conn.prepareStatement(sql);
@@ -184,7 +184,7 @@ public void updateReadCount(int num) {
     try {
         conn = connect();
         pstmt = conn.prepareStatement(
-            "UPDATE Gallery SET readcnt = readcnt + 1 WHERE num = ?"
+            "UPDATE public.gallery SET readcnt = COALESCE(readcnt, 0) + 1 WHERE num = ?"
         );
         pstmt.setInt(1, num);
         pstmt.executeUpdate();
