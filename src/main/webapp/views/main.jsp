@@ -81,7 +81,7 @@
     </style>
 </head>
 <body>
-<%@ include file="../resources/header/header.jsp"%>
+<%@ include file="/resources/header/header.jsp"%>
 <%
     String sid = (String) session.getAttribute("sid");
     String name = (String) session.getAttribute("sname");
@@ -193,7 +193,7 @@
 
 <% } %>
 
-<%@ include file="../resources/footer/footer.jsp"%>
+<%@ include file="/resources/footer/footer.jsp"%>
 
 <!-- JS Script -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
