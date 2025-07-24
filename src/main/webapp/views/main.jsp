@@ -83,8 +83,6 @@
 <body>
 <%@ include file="/resources/header/header.jsp"%>
 <%
-    String sid = (String) session.getAttribute("sid");
-    String name = (String) session.getAttribute("sname");
     boolean isLoggedIn = (sid != null);
 %>
 
