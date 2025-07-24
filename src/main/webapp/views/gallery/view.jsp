@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title> 게시판</title>
+<title>갤러리 게시글 보기</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -72,7 +72,7 @@
  <tr>
         <th scope="row">제목</th>
         <td colspan="3">
-            <h4 class="mb-0"><%= post.getTitle() %></h4>
+            <h4 class="mb-0"><%= post.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;") %></h4>
         </td>
 </tr>
  		<tr>
@@ -91,7 +91,7 @@
         <th scope="row" style="vertical-align: top;">내용</th>
         <td colspan="3" class="p-4" style="min-height: 200px;">
             <div class="content-area" style="white-space: pre-wrap; line-height: 1.6;">
-                <%= post.getContent() %>
+                <%= post.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;") %>
             </div>
         </td>
       </tr>
