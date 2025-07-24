@@ -9,12 +9,13 @@ public class GalleryDTO {
     private String content;
     private String pw;
     private String regdate;
+    private String moddate;      // 수정일 추가
     private int readcnt;
     private String ip;
     private int ref;
     private int re_step;
     private int re_level;
-    private String image;        // ↖ 추가
+    private String image;
 
     public String getImage() {   // ↖ 추가
         return image;
@@ -22,7 +23,12 @@ public class GalleryDTO {
     public void setImage(String image) {
         this.image = image;
     }
-    
+    public String getModdate() {
+    return moddate;
+	}
+	public void setModdate(String moddate) {
+		this.moddate = moddate;
+	}
     
 	public int getNum() {
 		return num;

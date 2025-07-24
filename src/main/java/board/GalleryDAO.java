@@ -39,6 +39,8 @@ public class GalleryDAO {
         try { if (conn  != null) conn.close();  } catch (SQLException ignored) {}
     }
 
+    
+
     /** 1. 글 등록 */
     public int insertGallery(GalleryDTO pd) {
         int result = 0;
@@ -164,39 +166,71 @@ public class GalleryDAO {
         return dto;
     }
 
-    /** 4. 조회수 증가 */
-    public void increaseReadcnt(int num) {
-        String sql = "UPDATE Gallery SET readcnt = readcnt + 1 WHERE num = ?";
-        try {
-            conn = connect();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, num);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            disconnect();
-        }
+    /** 조회수 증가 */
+public void updateReadCount(int num) {
+    try {
+        conn = connect();
+        pstmt = conn.prepareStatement(
+            "UPDATE gallery SET readcount = readcount + 1 WHERE num = ?"
+        );
+        pstmt.setInt(1, num);
+        pstmt.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        disconnect();
     }
+}
 
-    /** 5. 글 수정 */
-    public int updateGallery(GalleryDTO dto) {
-        String sql = "UPDATE Gallery "
-                   + "SET title = ?, content = ?, image = ? "
-                   + "WHERE num = ? AND pw = ?";
-        try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, dto.getTitle());
-            pstmt.setString(2, dto.getContent());
-            pstmt.setString(3, dto.getImage());
-            pstmt.setInt   (4, dto.getNum());
-            pstmt.setString(5, dto.getPw());
-            return pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
+    /** 글 수정 */
+public int updateGallery(GalleryDTO dto) {
+    int result = 0;
+    
+    try {
+        conn = connect();
+        
+        // 1. 게시물 존재 여부와 비밀번호 확인
+        pstmt = conn.prepareStatement(
+            "SELECT pw, writer FROM gallery WHERE num = ?"
+        );
+        pstmt.setInt(1, dto.getNum());
+        rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            String dbpasswd = rs.getString("pw");
+            
+            // 비밀번호 확인
+            if (dbpasswd.equals(dto.getPw())) {
+                String updateQuery;
+                if (dto.getImage() != null && !dto.getImage().trim().isEmpty()) {
+                    updateQuery = "UPDATE gallery SET title=?, content=?, image=?, moddate=CURRENT_TIMESTAMP "
+                              + "WHERE num=?";
+                } else {
+                    updateQuery = "UPDATE gallery SET title=?, content=?, moddate=CURRENT_TIMESTAMP "
+                              + "WHERE num=?";
+                }
+                
+                pstmt = conn.prepareStatement(updateQuery);
+                pstmt.setString(1, dto.getTitle());
+                pstmt.setString(2, dto.getContent());
+                
+                if (dto.getImage() != null && !dto.getImage().trim().isEmpty()) {
+                    pstmt.setString(3, dto.getImage());
+                    pstmt.setInt(4, dto.getNum());
+                } else {
+                    pstmt.setInt(3, dto.getNum());
+                }
+                
+                result = pstmt.executeUpdate();
+            }
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        disconnect();
     }
+    return result;
+}
 
     /** 6. 글 삭제 */
     public int deleteGallery(int num, String pw) {
