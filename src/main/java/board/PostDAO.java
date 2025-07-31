@@ -19,12 +19,9 @@ public class PostDAO {
     private Connection connect() {
         try {
             Class.forName("org.postgresql.Driver");
-            String url = 
-                "jdbc:postgresql://"
-              + "dpg-d1egnpje5dus73bdibt0-a.singapore-postgres.render.com"
-              + ":5432/redbearstorage?sslmode=require";
-            String user = "redbearstorage_user";
-            String pass = "3MIkZPNJS880iE9NhM0f5s73EQ3MbcFQ";
+            String url  ="postgresql://redbearstorage_02d4_user:6cgrFSNQY4fcoNmX2Zm7kheOPqEZKnvq@dpg-d24nbuali9vc73eftdkg-a.singapore-postgres.render.com/redbearstorage_02d4";
+	        String user = "redbearstorage_02d4_user";
+	        String pass = "6cgrFSNQY4fcoNmX2Zm7kheOPqEZKnvq";
             return DriverManager.getConnection(url, user, pass);
         } catch (Exception e) {
             e.printStackTrace();
